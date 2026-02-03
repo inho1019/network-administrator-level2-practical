@@ -1836,7 +1836,22 @@ function RouterSettingsQuiz({ onBack }: { onBack: () => void }) {
   };
 
   const handleCheck = () => {
-    const correct = checkRouterCommands(currentProblem.commands, userCommands);
+    // 현재 입력 중인 명령어가 있으면 추가
+    let commandsToCheck = userCommands;
+    if (currentCommand.trim()) {
+      commandsToCheck = [...userCommands, currentCommand.trim()];
+      setUserCommands(commandsToCheck);
+      setCommandHistory([
+        ...commandHistory,
+        `Router> ${currentCommand.trim()}`,
+      ]);
+      setCurrentCommand("");
+    }
+
+    const correct = checkRouterCommands(
+      currentProblem.commands,
+      commandsToCheck,
+    );
     setIsCorrect(correct);
     setShowResult(true);
   };
@@ -1857,6 +1872,17 @@ function RouterSettingsQuiz({ onBack }: { onBack: () => void }) {
     setCurrentCommand("");
     setShowResult(false);
     setCommandHistory([]);
+  };
+
+  const handleDeleteLastLine = () => {
+    if (userCommands.length > 0) {
+      const newCommands = userCommands.slice(0, -1);
+      setUserCommands(newCommands);
+
+      // commandHistory에서도 마지막 줄 제거
+      const newHistory = commandHistory.slice(0, -1);
+      setCommandHistory(newHistory);
+    }
   };
 
   const checkRouterCommands = (
@@ -2106,6 +2132,13 @@ function RouterSettingsQuiz({ onBack }: { onBack: () => void }) {
           <div className="button-group">
             {!showResult ? (
               <>
+                <button
+                  className="delete-line-button-router"
+                  onClick={handleDeleteLastLine}
+                  disabled={userCommands.length === 0}
+                >
+                  한 줄 지우기
+                </button>
                 <button className="reset-button-router" onClick={handleReset}>
                   초기화
                 </button>

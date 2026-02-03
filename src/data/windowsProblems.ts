@@ -169,7 +169,6 @@ export const windowsProblems: WindowsSettingsProblem[] = [
       "도구",
       "서비스",
       "Windows Push Notifications System Service 더블클릭",
-      "일반 탭",
     ],
     correctAnswers: {
       serviceName: "Windows Push Notifications System Service",
@@ -183,13 +182,7 @@ export const windowsProblems: WindowsSettingsProblem[] = [
     title: "#11 IP Helper 서비스 (2022년 2회)",
     description:
       "IPv6 전환 기술과 IP-HTTPS를 사용하여 터널 연결을 제공합니다.\n\n설정 요구사항:\n서비스 상태: 실행 중",
-    accessPath: [
-      "서버 관리자",
-      "도구",
-      "서비스",
-      "IP Helper 더블클릭",
-      "일반 탭",
-    ],
+    accessPath: ["서버 관리자", "도구", "서비스", "IP Helper 더블클릭"],
     correctAnswers: {
       serviceName: "IP Helper",
       serviceStatus: "실행 중",
@@ -206,7 +199,6 @@ export const windowsProblems: WindowsSettingsProblem[] = [
       "도구",
       "서비스",
       "Windows Process Activation Service 더블클릭",
-      "일반 탭",
     ],
     correctAnswers: {
       serviceName: "Windows Process Activation Service",
@@ -224,7 +216,6 @@ export const windowsProblems: WindowsSettingsProblem[] = [
       "도구",
       "서비스",
       "Microsoft iSCSI Initiator Service 더블클릭",
-      "일반 탭",
     ],
     correctAnswers: {
       serviceName: "Microsoft iSCSI Initiator Service",
@@ -243,7 +234,6 @@ export const windowsProblems: WindowsSettingsProblem[] = [
       "도구",
       "서비스",
       "Encrypting File System (EFS) 더블클릭",
-      "일반 탭",
     ],
     correctAnswers: {
       serviceName: "Encrypting File System (EFS)",
@@ -261,7 +251,6 @@ export const windowsProblems: WindowsSettingsProblem[] = [
       "도구",
       "서비스",
       "Performance Logs & Alerts 더블클릭",
-      "일반 탭",
     ],
     correctAnswers: {
       serviceName: "Performance Logs & Alerts",
@@ -279,7 +268,6 @@ export const windowsProblems: WindowsSettingsProblem[] = [
       "도구",
       "서비스",
       "World Wide Web Publishing Service 더블클릭",
-      "일반 탭",
     ],
     correctAnswers: {
       serviceName: "World Wide Web Publishing Service",

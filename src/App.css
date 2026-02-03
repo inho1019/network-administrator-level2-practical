@@ -81,6 +81,22 @@ body {
   background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
 }
 
+.mode-button.router {
+  background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+}
+
+.mode-button.cable {
+  background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+}
+
+.mode-button.mock-exam {
+  background: linear-gradient(135deg, #ff6a00 0%, #ee0979 100%);
+}
+
+.mode-button.exam-info {
+  background: linear-gradient(135deg, #43cea2 0%, #185a9d 100%);
+}
+
 .mode-icon {
   font-size: 3rem;
   margin-bottom: 15px;
@@ -372,6 +388,628 @@ body {
   box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
 }
 
+/* 뒤로 가기 버튼 */
+.back-button {
+  width: 100%;
+  padding: 15px;
+  margin-top: 20px;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #667eea;
+  background: white;
+  border: 2px solid #667eea;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.back-button:hover {
+  background: #667eea;
+  color: white;
+}
+
+/* 윈도우 설정 페이지 */
+.windows-settings-page {
+  background: white;
+  border-radius: 20px;
+  padding: 30px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  width: 100%;
+  max-width: 900px;
+  animation: fadeIn 0.5s ease-in;
+}
+
+.windows-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+  padding-bottom: 20px;
+  border-bottom: 2px solid #e0e0e0;
+}
+
+.back-button-small {
+  padding: 8px 16px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #667eea;
+  background: white;
+  border: 2px solid #667eea;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.back-button-small:hover {
+  background: #667eea;
+  color: white;
+}
+
+.windows-title {
+  font-size: 1.8rem;
+  color: #333;
+  margin: 0;
+}
+
+.problem-counter {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-weight: 600;
+}
+
+.windows-problem-card {
+  background: #f8f9fa;
+  border-radius: 15px;
+  padding: 30px;
+}
+
+.problem-title {
+  font-size: 1.5rem;
+  color: #333;
+  margin-bottom: 15px;
+}
+
+.problem-description {
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  margin-bottom: 30px;
+  border-left: 4px solid #667eea;
+}
+
+.problem-description p {
+  color: #555;
+  line-height: 1.8;
+  margin: 5px 0;
+  font-weight: 500;
+}
+
+/* Windows GUI 스타일 */
+.windows-gui-container {
+  margin: 20px 0;
+}
+
+.windows-dialog {
+  background: #f0f0f0;
+  border: 1px solid #0078d4;
+  border-radius: 8px 8px 0 0;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+  overflow: hidden;
+}
+
+.dialog-title-bar {
+  background: linear-gradient(180deg, #fff 0%, #e5e5e5 100%);
+  padding: 8px 12px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #d0d0d0;
+}
+
+.dialog-title {
+  font-size: 0.9rem;
+  color: #000;
+  font-weight: 500;
+}
+
+.title-bar-buttons {
+  display: flex;
+  gap: 8px;
+}
+
+.title-button {
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #e1e1e1;
+  border: 1px solid #adadad;
+  border-radius: 2px;
+  cursor: pointer;
+  font-size: 0.8rem;
+  color: #000;
+}
+
+.title-button:hover {
+  background: #d0d0d0;
+}
+
+.dialog-content {
+  background: #f0f0f0;
+  padding: 20px;
+}
+
+.dialog-section {
+  margin-bottom: 20px;
+}
+
+.section-title {
+  font-size: 0.95rem;
+  color: #000;
+  margin-bottom: 12px;
+  font-weight: 600;
+  border-bottom: 1px solid #d0d0d0;
+  padding-bottom: 8px;
+}
+
+.radio-option {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 15px;
+  font-size: 0.95rem;
+  color: #000;
+  cursor: pointer;
+}
+
+.radio-option input[type="radio"] {
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+}
+
+.input-group {
+  display: flex;
+  align-items: center;
+  margin-bottom: 12px;
+  margin-left: 24px;
+}
+
+.input-label {
+  width: 180px;
+  font-size: 0.9rem;
+  color: #000;
+}
+
+.windows-input {
+  flex: 1;
+  padding: 6px 10px;
+  border: 1px solid #7a7a7a;
+  background: white;
+  font-size: 0.9rem;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  transition: border-color 0.2s ease;
+}
+
+.windows-input:focus {
+  outline: none;
+  border: 1px solid #0078d4;
+  box-shadow: 0 0 0 1px #0078d4;
+}
+
+.windows-input:disabled {
+  background: #e0e0e0;
+  color: #666;
+}
+
+.input-correct {
+  border: 2px solid #28a745 !important;
+  background: #d4edda !important;
+}
+
+.input-incorrect {
+  border: 2px solid #dc3545 !important;
+  background: #f8d7da !important;
+}
+
+/* 버튼 그룹 */
+.button-group {
+  margin-top: 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.submit-button-windows {
+  width: 100%;
+  padding: 15px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: white;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.submit-button-windows:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
+}
+
+.result-feedback {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.feedback-message {
+  padding: 20px;
+  border-radius: 10px;
+  text-align: center;
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+
+.feedback-message.correct {
+  background: #d4edda;
+  color: #155724;
+  border: 2px solid #28a745;
+}
+
+.feedback-message.incorrect {
+  background: #f8d7da;
+  color: #721c24;
+  border: 2px solid #dc3545;
+}
+
+.correct-answers-box {
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  border-left: 4px solid #0078d4;
+}
+
+.correct-answers-box h4 {
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.correct-answers-box p {
+  color: #555;
+  margin: 8px 0;
+  font-size: 0.95rem;
+}
+
+.correct-answers-box strong {
+  color: #0078d4;
+}
+
+.next-button {
+  width: 100%;
+  padding: 15px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: white;
+  background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.next-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 20px rgba(40, 167, 69, 0.4);
+}
+
+.retry-button {
+  width: 100%;
+  padding: 15px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: white;
+  background: linear-gradient(135deg, #f5576c 0%, #f093fb 100%);
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.retry-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 20px rgba(245, 87, 108, 0.4);
+}
+
+.button-row {
+  display: flex;
+  gap: 15px;
+}
+
+.button-row button {
+  flex: 1;
+}
+
+.skip-button {
+  padding: 15px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: white;
+  background: linear-gradient(135deg, #6c757d 0%, #495057 100%);
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.skip-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 20px rgba(108, 117, 125, 0.4);
+}
+
+/* 라우터 설정 페이지 */
+.router-settings-page {
+  background: white;
+  border-radius: 20px;
+  padding: 30px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  width: 100%;
+  max-width: 1000px;
+  animation: fadeIn 0.5s ease-in;
+}
+
+.router-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+  padding-bottom: 20px;
+  border-bottom: 2px solid #e0e0e0;
+}
+
+.router-title {
+  font-size: 1.8rem;
+  color: #333;
+  margin: 0;
+}
+
+.router-problem-card {
+  background: #f8f9fa;
+  border-radius: 15px;
+  padding: 30px;
+}
+
+.problem-category {
+  display: inline-block;
+  background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+  color: white;
+  padding: 6px 16px;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  margin-bottom: 15px;
+}
+
+/* 터미널 스타일 */
+.router-terminal {
+  background: #1e1e1e;
+  border-radius: 10px;
+  overflow: hidden;
+  margin: 20px 0;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+.terminal-header {
+  background: #323232;
+  padding: 10px 15px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.terminal-buttons {
+  display: flex;
+  gap: 8px;
+}
+
+.terminal-button {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+}
+
+.terminal-button.red {
+  background: #ff5f56;
+}
+
+.terminal-button.yellow {
+  background: #ffbd2e;
+}
+
+.terminal-button.green {
+  background: #27c93f;
+}
+
+.terminal-title {
+  color: #999;
+  font-size: 0.85rem;
+  margin-left: 10px;
+}
+
+.terminal-body {
+  padding: 20px;
+  min-height: 300px;
+  max-height: 500px;
+  overflow-y: auto;
+  font-family: "Consolas", "Monaco", "Courier New", monospace;
+}
+
+.terminal-output {
+  margin-bottom: 10px;
+}
+
+.terminal-line {
+  color: #d4d4d4;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  padding: 2px 0;
+}
+
+.terminal-input-form {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.terminal-prompt {
+  color: #4fc3f7;
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+
+.terminal-input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  color: #d4d4d4;
+  font-size: 0.95rem;
+  font-family: "Consolas", "Monaco", "Courier New", monospace;
+  outline: none;
+  padding: 5px;
+}
+
+.terminal-input::placeholder {
+  color: #666;
+}
+
+.command-info {
+  margin-top: 15px;
+  padding: 10px;
+  background: rgba(79, 195, 247, 0.1);
+  border-left: 3px solid #4fc3f7;
+  border-radius: 4px;
+}
+
+.command-info p {
+  color: #4fc3f7;
+  font-size: 0.9rem;
+  margin: 0;
+}
+
+/* 정답 명령어 박스 */
+.correct-commands-box {
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  border-left: 4px solid #4facfe;
+  margin: 15px 0;
+}
+
+.correct-commands-box h4 {
+  color: #333;
+  margin-bottom: 15px;
+}
+
+.command-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.command-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: #f8f9fa;
+  padding: 10px 15px;
+  border-radius: 8px;
+}
+
+.command-number {
+  color: #4facfe;
+  font-weight: 600;
+  min-width: 25px;
+}
+
+.command-item code {
+  background: #1e1e1e;
+  color: #4fc3f7;
+  padding: 4px 10px;
+  border-radius: 4px;
+  font-family: "Consolas", "Monaco", "Courier New", monospace;
+  font-size: 0.9rem;
+  flex: 1;
+}
+
+.explanation-box {
+  background: #e3f2fd;
+  padding: 20px;
+  border-radius: 10px;
+  border-left: 4px solid #2196f3;
+  margin: 15px 0;
+}
+
+.explanation-box h4 {
+  color: #1976d2;
+  margin-bottom: 10px;
+}
+
+.explanation-box p {
+  color: #555;
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* 라우터 버튼들 */
+.reset-button-router {
+  padding: 15px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #666;
+  background: white;
+  border: 2px solid #ddd;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.reset-button-router:hover {
+  border-color: #999;
+  color: #333;
+}
+
+.submit-button-router {
+  flex: 2;
+  padding: 15px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: white;
+  background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.submit-button-router:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 20px rgba(79, 172, 254, 0.4);
+}
+
 /* 애니메이션 */
 @keyframes fadeIn {
   from {
@@ -470,5 +1108,987 @@ body {
 
   .score-value {
     font-size: 2.5rem;
+  }
+}
+
+/* 케이블 제작 페이지 */
+.cable-making-page {
+  background: white;
+  border-radius: 20px;
+  padding: 40px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  max-width: 1200px;
+  margin: 20px auto;
+  animation: fadeIn 0.5s ease-in;
+}
+
+.cable-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+  padding-bottom: 20px;
+  border-bottom: 2px solid #e0e0e0;
+}
+
+.cable-title {
+  font-size: 1.8rem;
+  color: #333;
+  margin: 0;
+}
+
+.cable-problem-header {
+  text-align: center;
+  margin: 0 0 40px 0;
+  padding: 0;
+}
+
+.cable-instruction {
+  font-size: 1.3rem;
+  color: #667eea;
+  font-weight: 600;
+  margin-bottom: 10px;
+  margin-top: 0;
+}
+
+.cable-hint {
+  font-size: 1rem;
+  color: #666;
+  margin: 0;
+}
+
+.cable-workspace {
+  display: flex;
+  gap: 40px;
+  justify-content: center;
+  margin: 0 0 30px 0;
+  flex-wrap: wrap;
+}
+
+.cable-side {
+  flex: 1;
+  min-width: 300px;
+  max-width: 450px;
+}
+
+.cable-side h3 {
+  text-align: center;
+  font-size: 1.3rem;
+  color: #333;
+  margin-bottom: 20px;
+  padding: 10px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border-radius: 10px;
+}
+
+.cable-connector {
+  background: #f5f5f5;
+  border: 3px solid #333;
+  border-radius: 15px;
+  padding: 20px;
+  box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.wire-slot {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 12px;
+  padding: 8px;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.wire-position {
+  width: 30px;
+  height: 30px;
+  background: #333;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  font-weight: bold;
+  font-size: 0.9rem;
+}
+
+.wire-display {
+  flex: 1;
+  height: 40px;
+  border-radius: 8px;
+  border: 2px solid #ccc;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.wire-label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #333;
+  text-shadow:
+    0 0 3px white,
+    0 0 3px white;
+}
+
+.color-select {
+  padding: 8px 12px;
+  border: 2px solid #667eea;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  background: white;
+  min-width: 100px;
+  transition: all 0.3s ease;
+}
+
+.color-select:hover {
+  border-color: #764ba2;
+  background: #f9f9f9;
+}
+
+.color-select:focus {
+  outline: none;
+  border-color: #764ba2;
+  box-shadow: 0 0 0 3px rgba(118, 75, 162, 0.1);
+}
+
+.cable-controls {
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+  margin: 30px 0;
+}
+
+.check-button,
+.reset-button {
+  padding: 15px 40px;
+  font-size: 1.1rem;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-weight: 600;
+  flex: 1;
+  max-width: 200px;
+}
+
+.check-button {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+}
+
+.check-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+}
+
+.reset-button {
+  background: #ff6b6b;
+  color: white;
+}
+
+.reset-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(255, 107, 107, 0.4);
+}
+
+.result-message {
+  margin-top: 30px;
+  padding: 25px;
+  border-radius: 15px;
+  text-align: center;
+}
+
+.result-message.correct {
+  background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+  color: white;
+}
+
+.result-message.incorrect {
+  background: linear-gradient(135deg, #eb3349 0%, #f45c43 100%);
+  color: white;
+}
+
+.result-message h3 {
+  font-size: 1.8rem;
+  margin-bottom: 10px;
+}
+
+.result-message p {
+  font-size: 1.2rem;
+}
+
+.correct-answer-display {
+  margin-top: 20px;
+  background: rgba(255, 255, 255, 0.2);
+  padding: 20px;
+  border-radius: 10px;
+}
+
+.answer-sides {
+  display: flex;
+  gap: 30px;
+  justify-content: center;
+  margin-top: 15px;
+  flex-wrap: wrap;
+}
+
+.answer-sides > div {
+  flex: 1;
+  min-width: 250px;
+}
+
+.answer-sides p {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+
+.answer-wires {
+  background: rgba(255, 255, 255, 0.3);
+  padding: 15px;
+  border-radius: 8px;
+}
+
+.answer-wire {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 8px;
+  padding: 5px;
+  background: rgba(255, 255, 255, 0.4);
+  border-radius: 5px;
+}
+
+.answer-wire span:first-child {
+  font-weight: bold;
+  min-width: 25px;
+}
+
+.answer-wire-color {
+  width: 30px;
+  height: 30px;
+  border-radius: 5px;
+  border: 2px solid white;
+}
+
+.answer-wire span:last-child {
+  font-weight: 600;
+}
+
+@media (max-width: 768px) {
+  .cable-making-page {
+    padding: 20px;
+    margin: 10px;
+  }
+
+  .cable-header {
+    padding-bottom: 15px;
+  }
+
+  .cable-title {
+    font-size: 1.3rem;
+  }
+
+  .cable-problem-header {
+    margin-bottom: 20px;
+  }
+
+  .cable-workspace {
+    flex-direction: column;
+    gap: 30px;
+    margin-bottom: 20px;
+  }
+
+  .cable-side {
+    min-width: 100%;
+  }
+
+  .wire-slot {
+    flex-wrap: wrap;
+  }
+
+  .color-select {
+    min-width: 100%;
+  }
+
+  .cable-controls {
+    flex-direction: column;
+    margin: 20px 0;
+  }
+
+  .check-button,
+  .reset-button {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .answer-sides {
+    flex-direction: column;
+  }
+}
+
+/* 모의고사 페이지 */
+.mock-exam-page {
+  background: white;
+  border-radius: 20px;
+  padding: 40px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  max-width: 1200px;
+  margin: 20px auto;
+  animation: fadeIn 0.5s ease-in;
+}
+
+.mock-exam-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+  padding-bottom: 20px;
+  border-bottom: 2px solid #e0e0e0;
+}
+
+.mock-exam-title {
+  font-size: 1.8rem;
+  color: #333;
+  margin: 0;
+}
+
+.mock-exam-info {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  margin-bottom: 30px;
+  flex-wrap: wrap;
+}
+
+.exam-info-item {
+  background: linear-gradient(135deg, #ff6a00 0%, #ee0979 100%);
+  color: white;
+  padding: 12px 24px;
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+  min-width: 120px;
+}
+
+.info-label {
+  font-size: 0.85rem;
+  opacity: 0.9;
+}
+
+.info-value {
+  font-size: 1.3rem;
+  font-weight: bold;
+}
+
+.exam-problem-content {
+  background: #f8f9fa;
+  border-radius: 15px;
+  padding: 30px;
+}
+
+.exam-problem-category {
+  display: inline-block;
+  background: linear-gradient(135deg, #ff6a00 0%, #ee0979 100%);
+  color: white;
+  padding: 6px 16px;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  margin-bottom: 15px;
+}
+
+.exam-problem-title {
+  font-size: 1.5rem;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+.exam-problem-instruction,
+.exam-problem-question {
+  font-size: 1.2rem;
+  color: #555;
+  margin-bottom: 15px;
+  line-height: 1.6;
+}
+
+.exam-problem-description {
+  background: white;
+  padding: 15px;
+  border-radius: 10px;
+  margin-bottom: 20px;
+}
+
+.exam-problem-description p {
+  margin-bottom: 8px;
+  color: #555;
+}
+
+.exam-problem-hint {
+  color: #667eea;
+  font-size: 1rem;
+  margin-bottom: 20px;
+}
+
+.exam-answer-input {
+  width: 100%;
+  padding: 15px;
+  font-size: 1.1rem;
+  border: 2px solid #ddd;
+  border-radius: 10px;
+  margin-bottom: 20px;
+  transition: all 0.3s ease;
+}
+
+.exam-answer-input:focus {
+  outline: none;
+  border-color: #ff6a00;
+  box-shadow: 0 0 0 3px rgba(255, 106, 0, 0.1);
+}
+
+.exam-answer-input:disabled {
+  background: #f5f5f5;
+  cursor: not-allowed;
+}
+
+.submit-exam-button,
+.next-exam-button,
+.clear-exam-button {
+  padding: 15px 40px;
+  font-size: 1.1rem;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-weight: 600;
+  margin: 10px auto;
+  display: block;
+}
+
+.submit-exam-button {
+  background: linear-gradient(135deg, #ff6a00 0%, #ee0979 100%);
+  color: white;
+  width: 100%;
+  max-width: 300px;
+}
+
+.submit-exam-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(255, 106, 0, 0.4);
+}
+
+.next-exam-button {
+  background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+  color: white;
+  width: 100%;
+  max-width: 300px;
+}
+
+.next-exam-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(17, 153, 142, 0.4);
+}
+
+.clear-exam-button {
+  background: #6c757d;
+  color: white;
+}
+
+.clear-exam-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(108, 117, 125, 0.4);
+}
+
+.exam-terminal-controls {
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.exam-terminal-controls .submit-exam-button,
+.exam-terminal-controls .clear-exam-button {
+  flex: 1;
+  max-width: 200px;
+}
+
+.exam-result {
+  margin-top: 30px;
+  padding: 25px;
+  border-radius: 15px;
+  text-align: center;
+}
+
+.exam-result.correct {
+  background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+  color: white;
+}
+
+.exam-result.incorrect {
+  background: linear-gradient(135deg, #eb3349 0%, #f45c43 100%);
+  color: white;
+}
+
+.exam-result p {
+  font-size: 1.3rem;
+  margin-bottom: 15px;
+}
+
+.correct-commands {
+  background: rgba(255, 255, 255, 0.2);
+  padding: 15px;
+  border-radius: 10px;
+  margin: 15px 0;
+  text-align: left;
+}
+
+.correct-commands p {
+  font-size: 1.1rem;
+  margin-bottom: 10px;
+}
+
+.correct-command {
+  background: rgba(255, 255, 255, 0.3);
+  padding: 8px 12px;
+  border-radius: 5px;
+  margin: 5px 0;
+  font-family: "Courier New", monospace;
+  font-size: 0.95rem;
+}
+
+/* 모의고사 결과 페이지 */
+.exam-result-summary {
+  background: white;
+  border-radius: 15px;
+  padding: 25px;
+  margin: 30px 0;
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+.exam-result-summary h3 {
+  color: #333;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.exam-result-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 15px;
+  margin-bottom: 10px;
+  background: #f8f9fa;
+  border-radius: 8px;
+}
+
+.result-number {
+  font-weight: bold;
+  color: #333;
+  min-width: 50px;
+}
+
+.result-type {
+  flex: 1;
+  color: #666;
+}
+
+.result-score {
+  font-weight: bold;
+  padding: 5px 12px;
+  border-radius: 15px;
+  min-width: 80px;
+  text-align: center;
+}
+
+.result-score.correct {
+  background: #38ef7d;
+  color: white;
+}
+
+.result-score.incorrect {
+  background: #f45c43;
+  color: white;
+}
+
+.result-message {
+  font-size: 1.3rem;
+  font-weight: 600;
+  margin: 20px 0;
+  padding: 15px;
+  border-radius: 10px;
+  text-align: center;
+}
+
+.result-message.success {
+  background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+  color: white;
+}
+
+.result-message.fail {
+  background: linear-gradient(135deg, #eb3349 0%, #f45c43 100%);
+  color: white;
+}
+
+@media (max-width: 768px) {
+  .mock-exam-page {
+    padding: 20px;
+    margin: 10px;
+  }
+
+  .mock-exam-header {
+    padding-bottom: 15px;
+  }
+
+  .mock-exam-title {
+    font-size: 1.3rem;
+  }
+
+  .mock-exam-info {
+    gap: 10px;
+  }
+
+  .exam-info-item {
+    min-width: 100px;
+    padding: 10px 15px;
+  }
+
+  .info-value {
+    font-size: 1.1rem;
+  }
+
+  .exam-problem-content {
+    padding: 20px;
+  }
+
+  .exam-problem-title {
+    font-size: 1.2rem;
+  }
+
+  .exam-terminal-controls {
+    flex-direction: column;
+  }
+
+  .exam-terminal-controls .submit-exam-button,
+  .exam-terminal-controls .clear-exam-button {
+    max-width: 100%;
+  }
+
+  .exam-result-item {
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .result-number,
+  .result-type {
+    min-width: auto;
+  }
+}
+
+/* 시험 정보 페이지 */
+.exam-info-page {
+  background: white;
+  border-radius: 20px;
+  padding: 40px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  max-width: 1000px;
+  margin: 20px auto;
+  animation: fadeIn 0.5s ease-in;
+}
+
+.exam-info-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+  padding-bottom: 20px;
+  border-bottom: 2px solid #e0e0e0;
+}
+
+.exam-info-title {
+  font-size: 1.8rem;
+  color: #333;
+  margin: 0;
+}
+
+.exam-info-content {
+  color: #333;
+}
+
+.info-section {
+  margin-bottom: 35px;
+  padding: 25px;
+  background: #f8f9fa;
+  border-radius: 15px;
+}
+
+.info-section h2 {
+  font-size: 1.8rem;
+  color: #333;
+  margin-bottom: 15px;
+}
+
+.info-section h3 {
+  font-size: 1.4rem;
+  color: #667eea;
+  margin-bottom: 15px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.info-intro {
+  font-size: 1.1rem;
+  line-height: 1.8;
+  color: #555;
+}
+
+.info-section p {
+  font-size: 1rem;
+  line-height: 1.7;
+  color: #555;
+}
+
+.info-section.highlight {
+  background: linear-gradient(135deg, #667eea15 0%, #764ba215 100%);
+  border: 2px solid #667eea;
+}
+
+.info-section.tips {
+  background: linear-gradient(135deg, #43cea215 0%, #185a9d15 100%);
+  border: 2px solid #43cea2;
+}
+
+.info-section.warning {
+  background: linear-gradient(135deg, #ff6a0015 0%, #ee097915 100%);
+  border: 2px solid #ff6a00;
+}
+
+.exam-structure-table {
+  margin-top: 20px;
+  background: white;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.table-header,
+.table-row {
+  display: grid;
+  grid-template-columns: 1fr 2fr 1fr 1fr 1.5fr;
+  gap: 10px;
+  padding: 15px;
+  align-items: center;
+}
+
+.table-header {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  font-weight: bold;
+  font-size: 0.95rem;
+}
+
+.table-row {
+  border-bottom: 1px solid #e0e0e0;
+  font-size: 0.95rem;
+}
+
+.table-row:last-of-type {
+  border-bottom: none;
+}
+
+.table-row:hover {
+  background: #f8f9fa;
+}
+
+.col-number {
+  font-weight: 600;
+  color: #667eea;
+}
+
+.col-item {
+  font-weight: 500;
+}
+
+.col-count,
+.col-score {
+  text-align: center;
+}
+
+.col-type {
+  text-align: center;
+  font-size: 0.9rem;
+  color: #666;
+}
+
+.table-footer {
+  background: #667eea;
+  color: white;
+  padding: 15px;
+  text-align: center;
+}
+
+.total-info {
+  font-size: 1.1rem;
+}
+
+.tips-list,
+.warning-list {
+  list-style: none;
+  padding: 0;
+  margin-top: 15px;
+}
+
+.tips-list li,
+.warning-list li {
+  padding: 12px 15px;
+  margin-bottom: 10px;
+  background: white;
+  border-radius: 8px;
+  border-left: 4px solid #43cea2;
+  line-height: 1.6;
+}
+
+.warning-list li {
+  border-left-color: #ff6a00;
+}
+
+.tips-list li strong,
+.warning-list li strong {
+  color: #333;
+  font-weight: 600;
+}
+
+.practice-cta {
+  margin-top: 40px;
+  padding: 30px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: 15px;
+  text-align: center;
+  color: white;
+}
+
+.practice-cta p {
+  font-size: 1.3rem;
+  margin-bottom: 20px;
+  font-weight: 500;
+}
+
+.start-practice-button {
+  padding: 15px 40px;
+  font-size: 1.2rem;
+  background: white;
+  color: #667eea;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-weight: 600;
+}
+
+.start-practice-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 20px rgba(255, 255, 255, 0.3);
+}
+
+@media (max-width: 768px) {
+  .exam-info-page {
+    padding: 20px;
+    margin: 10px;
+  }
+
+  .exam-info-header {
+    padding-bottom: 15px;
+  }
+
+  .exam-info-title {
+    font-size: 1.3rem;
+  }
+
+  .info-section {
+    padding: 20px;
+    margin-bottom: 25px;
+  }
+
+  .info-section h2 {
+    font-size: 1.4rem;
+  }
+
+  .info-section h3 {
+    font-size: 1.2rem;
+  }
+
+  .table-header,
+  .table-row {
+    grid-template-columns: 1fr;
+    gap: 5px;
+    padding: 10px;
+  }
+
+  .table-header {
+    display: none;
+  }
+
+  .table-row {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 15px;
+  }
+
+  .col-number::before {
+    content: "번호: ";
+    font-weight: bold;
+    color: #333;
+  }
+
+  .col-item::before {
+    content: "항목: ";
+    font-weight: bold;
+    color: #333;
+  }
+
+  .col-count::before {
+    content: "문제 수: ";
+    font-weight: bold;
+    color: #333;
+  }
+
+  .col-score::before {
+    content: "배점: ";
+    font-weight: bold;
+    color: #333;
+  }
+
+  .col-type::before {
+    content: "유형: ";
+    font-weight: bold;
+    color: #333;
+  }
+
+  .col-count,
+  .col-score,
+  .col-type {
+    text-align: left;
+  }
+
+  .practice-cta {
+    padding: 20px;
+  }
+
+  .practice-cta p {
+    font-size: 1.1rem;
+  }
+
+  .start-practice-button {
+    width: 100%;
+    padding: 15px;
   }
 }

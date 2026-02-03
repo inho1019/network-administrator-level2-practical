@@ -315,10 +315,10 @@ const routerProblems: RouterProblem[] = [
       "enable",
       "configure terminal",
       "ip domain-name AAA",
-      "end",
+      "exit",
       "copy running-config startup-config",
     ],
-    explanation: "도메인 설정: conf t → ip domain-name [도메인명] → end",
+    explanation: "도메인 설정: conf t → ip domain-name [도메인명]",
   },
   {
     id: 5,
@@ -489,10 +489,10 @@ const routerProblems: RouterProblem[] = [
       "enable",
       "configure terminal",
       "ip default-gateway 192.168.0.10",
-      "end",
+      "exit",
       "copy running-config startup-config",
     ],
-    explanation: "기본 게이트웨이: ip default-gateway [IP] → end",
+    explanation: "기본 게이트웨이: ip default-gateway [IP]",
   },
   {
     id: 16,
@@ -519,10 +519,10 @@ const routerProblems: RouterProblem[] = [
       "enable",
       "configure terminal",
       "ip route 24.48.200.0 255.255.255.0 100.150.100.2",
-      "end",
+      "exit",
       "copy running-config startup-config",
     ],
-    explanation: "정적 라우팅: ip route [목적지] [마스크] [게이트웨이] → end",
+    explanation: "정적 라우팅: ip route [목적지] [마스크] [게이트웨이]",
   },
   {
     id: 18,
@@ -532,10 +532,10 @@ const routerProblems: RouterProblem[] = [
       "enable",
       "configure terminal",
       "ip default-network 192.168.0.10",
-      "end",
+      "exit",
       "copy running-config startup-config",
     ],
-    explanation: "기본 네트워크: ip default-network [IP] → end",
+    explanation: "기본 네트워크: ip default-network [IP]",
   },
   {
     id: 19,
@@ -546,10 +546,10 @@ const routerProblems: RouterProblem[] = [
       "enable",
       "configure terminal",
       "ip default-network 192.168.1.1",
-      "end",
+      "exit",
       "copy running-config startup-config",
     ],
-    explanation: "RIP에서 디폴트 네트워크 설정 → end",
+    explanation: "RIP에서 디폴트 네트워크 설정",
   },
   {
     id: 20,
@@ -594,10 +594,10 @@ const routerProblems: RouterProblem[] = [
       "enable",
       "configure terminal",
       "snmp-server community ICQA ro",
-      "end",
+      "exit",
       "copy running-config startup-config",
     ],
-    explanation: "SNMP 커뮤니티: snmp-server community [이름] [ro|rw] → end",
+    explanation: "SNMP 커뮤니티: snmp-server community [이름] [ro|rw]",
   },
   {
     id: 23,
@@ -3488,9 +3488,11 @@ const allQuestions: Question[] = [
     description: "통합 위협 관리 - 다양한 보안 솔루션을 하나로 묶어서 운영",
   },
   {
-    question: "IPv6가 IPv4와 호환성을 유지하기 위해 두 프로토콜을 동시에 사용하는 기술은?",
+    question:
+      "IPv6가 IPv4와 호환성을 유지하기 위해 두 프로토콜을 동시에 사용하는 기술은?",
     answer: "dual stack",
-    description: "IPv6와 IPv4를 동시에 사용하는 기술 (dualstack 또는 dual stack)",
+    description:
+      "IPv6와 IPv4를 동시에 사용하는 기술 (dualstack 또는 dual stack)",
   },
   {
     question: "파일이나 디렉토리의 권한을 설정하는 명령어는?",
@@ -3540,7 +3542,10 @@ function App() {
 
   const checkAnswer = (userAnswer: string, correctAnswer: string): boolean => {
     const normalizedUser = userAnswer.toLowerCase().replace(/\s+/g, "").trim();
-    const normalizedCorrect = correctAnswer.toLowerCase().replace(/\s+/g, "").trim();
+    const normalizedCorrect = correctAnswer
+      .toLowerCase()
+      .replace(/\s+/g, "")
+      .trim();
     return normalizedUser === normalizedCorrect;
   };
 

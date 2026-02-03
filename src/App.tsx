@@ -149,7 +149,7 @@ const windowsProblems: WindowsSettingsProblem[] = [
     type: "network",
     title: "#1 네트워크 속성 설정",
     description:
-      "IP 192.168.100.56/29\nIP: 사용 가능한 첫번째 IP 주소\nGateway: 사용 가능한 마지막 IP 주소",
+      "네트워크: 192.168.100.56/29\n서브넷 마스크: /29에 해당하는 값\nIP: 사용 가능한 첫번째 호스트 IP 주소\nGateway: 사용 가능한 마지막 호스트 IP 주소",
     correctAnswers: {
       ip: "192.168.100.57",
       subnet: "255.255.255.248",
@@ -315,10 +315,10 @@ const routerProblems: RouterProblem[] = [
       "enable",
       "configure terminal",
       "ip domain-name AAA",
-      "exit",
+      "end",
       "copy running-config startup-config",
     ],
-    explanation: "도메인 설정: conf t → ip domain-name [도메인명]",
+    explanation: "도메인 설정: conf t → ip domain-name [도메인명] → end",
   },
   {
     id: 5,
@@ -489,10 +489,10 @@ const routerProblems: RouterProblem[] = [
       "enable",
       "configure terminal",
       "ip default-gateway 192.168.0.10",
-      "exit",
+      "end",
       "copy running-config startup-config",
     ],
-    explanation: "기본 게이트웨이: ip default-gateway [IP]",
+    explanation: "기본 게이트웨이: ip default-gateway [IP] → end",
   },
   {
     id: 16,
@@ -519,10 +519,10 @@ const routerProblems: RouterProblem[] = [
       "enable",
       "configure terminal",
       "ip route 24.48.200.0 255.255.255.0 100.150.100.2",
-      "exit",
+      "end",
       "copy running-config startup-config",
     ],
-    explanation: "정적 라우팅: ip route [목적지] [마스크] [게이트웨이]",
+    explanation: "정적 라우팅: ip route [목적지] [마스크] [게이트웨이] → end",
   },
   {
     id: 18,
@@ -532,10 +532,10 @@ const routerProblems: RouterProblem[] = [
       "enable",
       "configure terminal",
       "ip default-network 192.168.0.10",
-      "exit",
+      "end",
       "copy running-config startup-config",
     ],
-    explanation: "기본 네트워크: ip default-network [IP]",
+    explanation: "기본 네트워크: ip default-network [IP] → end",
   },
   {
     id: 19,
@@ -546,10 +546,10 @@ const routerProblems: RouterProblem[] = [
       "enable",
       "configure terminal",
       "ip default-network 192.168.1.1",
-      "exit",
+      "end",
       "copy running-config startup-config",
     ],
-    explanation: "RIP에서 디폴트 네트워크 설정",
+    explanation: "RIP에서 디폴트 네트워크 설정 → end",
   },
   {
     id: 20,
@@ -594,10 +594,10 @@ const routerProblems: RouterProblem[] = [
       "enable",
       "configure terminal",
       "snmp-server community ICQA ro",
-      "exit",
+      "end",
       "copy running-config startup-config",
     ],
-    explanation: "SNMP 커뮤니티: snmp-server community [이름] [ro|rw]",
+    explanation: "SNMP 커뮤니티: snmp-server community [이름] [ro|rw] → end",
   },
   {
     id: 23,
@@ -1877,42 +1877,152 @@ function RouterSettingsQuiz({ onBack }: { onBack: () => void }) {
       // 축약형 명령어 처리
       if (normalizedUser === normalizedCorrect) return true;
 
-      // 축약형 허용 (예: conf t = configure terminal)
+      // 축약형 허용 (Cisco IOS 명령어)
       const abbreviations: { [key: string]: string[] } = {
-        enable: ["en", "enable"],
-        "configure terminal": ["conf t", "config t", "configure terminal"],
+        enable: ["en", "ena", "enable"],
+        "configure terminal": [
+          "conf t",
+          "config t",
+          "conf term",
+          "configure terminal",
+        ],
+        exit: ["ex", "exit"],
+        end: ["end"],
         "interface fastethernet": [
           "int fa",
+          "int fast",
           "int fastethernet",
           "interface fa",
+          "interface fast",
           "interface fastethernet",
+        ],
+        "interface gigabitethernet": [
+          "int gi",
+          "int gig",
+          "int gigabitethernet",
+          "interface gi",
+          "interface gig",
+          "interface gigabitethernet",
         ],
         "interface serial": [
           "int s",
+          "int se",
+          "int ser",
           "int serial",
           "interface s",
+          "interface se",
+          "interface ser",
           "interface serial",
         ],
+        "interface ethernet": [
+          "int e",
+          "int eth",
+          "int ethernet",
+          "interface e",
+          "interface eth",
+          "interface ethernet",
+        ],
         "no shutdown": ["no sh", "no shut", "no shutdown"],
+        shutdown: ["sh", "shut", "shutdown"],
         "copy running-config startup-config": [
           "copy run start",
+          "copy r s",
           "copy running-config startup-config",
           "wr",
+          "write",
+          "write memory",
+        ],
+        "show running-config": [
+          "sh run",
+          "sh running",
+          "sh running-config",
+          "show run",
+          "show running",
+          "show running-config",
+        ],
+        "show startup-config": [
+          "sh start",
+          "sh startup",
+          "sh startup-config",
+          "show start",
+          "show startup",
+          "show startup-config",
         ],
         "line console": ["line con", "line console"],
         "line vty": ["line vty"],
         "ip address": ["ip add", "ip addr", "ip address"],
-        "router ospf": ["r ospf", "router ospf"],
+        "ip default-gateway": ["ip def", "ip default", "ip default-gateway"],
+        "ip route": ["ip rou", "ip route"],
+        "router ospf": ["rou ospf", "router ospf"],
+        "router rip": ["rou rip", "router rip"],
+        "router eigrp": ["rou eigrp", "router eigrp"],
+        network: ["net", "netw", "network"],
         "show ip interface brief": [
           "sh ip int br",
+          "sh ip int brief",
           "show ip int br",
+          "show ip int brief",
+          "show ip interface br",
           "show ip interface brief",
         ],
-        "show ip route": ["sh ip ro", "sh ip route", "show ip route"],
-        "show version": ["sh ver", "sh version", "show version"],
+        "show ip route": [
+          "sh ip rou",
+          "sh ip route",
+          "show ip rou",
+          "show ip route",
+        ],
+        "show version": ["sh ver", "sh version", "show ver", "show version"],
         "show flash": ["sh flash", "show flash"],
         "show users": ["sh users", "show users"],
-        "show processes": ["sh proc", "sh processes", "show processes"],
+        "show processes": [
+          "sh proc",
+          "sh process",
+          "sh processes",
+          "show proc",
+          "show process",
+          "show processes",
+        ],
+        "show interfaces": [
+          "sh int",
+          "sh inter",
+          "sh interfaces",
+          "show int",
+          "show inter",
+          "show interfaces",
+        ],
+        "show protocols": [
+          "sh prot",
+          "sh protocol",
+          "sh protocols",
+          "show prot",
+          "show protocol",
+          "show protocols",
+        ],
+        description: ["desc", "descr", "description"],
+        "clock rate": ["clock", "clock rate"],
+        bandwidth: ["band", "bandw", "bandwidth"],
+        "ip dhcp pool": ["ip dhcp pool"],
+        "ip dhcp excluded-address": [
+          "ip dhcp excl",
+          "ip dhcp excluded-address",
+        ],
+        "service password-encryption": [
+          "serv pass",
+          "serv password",
+          "service pass",
+          "service password-encryption",
+        ],
+        password: ["pass", "password"],
+        "enable secret": ["ena sec", "enable sec", "enable secret"],
+        "enable password": ["ena pass", "enable pass", "enable password"],
+        login: ["login"],
+        "no login": ["no login"],
+        "logging synchronous": [
+          "logg sync",
+          "logging sync",
+          "logging synchronous",
+        ],
+        "exec-timeout": ["exec", "exec-timeout"],
       };
 
       // 각 축약형 체크
@@ -3378,9 +3488,9 @@ const allQuestions: Question[] = [
     description: "통합 위협 관리 - 다양한 보안 솔루션을 하나로 묶어서 운영",
   },
   {
-    question: "IPv6가 IPv4와 호환성을 유지하는 방법은?",
-    answer: "dualstack",
-    description: "IPv6가 IPv4와 호환성을 유지하는 방법",
+    question: "IPv6가 IPv4와 호환성을 유지하기 위해 두 프로토콜을 동시에 사용하는 기술은?",
+    answer: "dual stack",
+    description: "IPv6와 IPv4를 동시에 사용하는 기술 (dualstack 또는 dual stack)",
   },
   {
     question: "파일이나 디렉토리의 권한을 설정하는 명령어는?",
@@ -3429,9 +3539,9 @@ function App() {
   };
 
   const checkAnswer = (userAnswer: string, correctAnswer: string): boolean => {
-    return (
-      userAnswer.toLowerCase().trim() === correctAnswer.toLowerCase().trim()
-    );
+    const normalizedUser = userAnswer.toLowerCase().replace(/\s+/g, "").trim();
+    const normalizedCorrect = correctAnswer.toLowerCase().replace(/\s+/g, "").trim();
+    return normalizedUser === normalizedCorrect;
   };
 
   const handleSubmitAnswer = () => {

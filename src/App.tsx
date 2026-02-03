@@ -147,6 +147,15 @@ function WindowsSettingsQuiz({ onBack }: { onBack: () => void }) {
           </div>
         </div>
 
+        <div className="progress-bar">
+          <div
+            className="progress-fill"
+            style={{
+              width: `${((currentProblemIndex + 1) / selectedProblems.length) * 100}%`,
+            }}
+          ></div>
+        </div>
+
         <div className="windows-problem-card">
           <h2 className="problem-title">{currentProblem.title}</h2>
 
@@ -492,6 +501,15 @@ function RouterSettingsQuiz({ onBack }: { onBack: () => void }) {
           <div className="problem-counter">
             {currentProblemIndex + 1} / {selectedProblems.length}
           </div>
+        </div>
+
+        <div className="progress-bar">
+          <div
+            className="progress-fill"
+            style={{
+              width: `${((currentProblemIndex + 1) / selectedProblems.length) * 100}%`,
+            }}
+          ></div>
         </div>
 
         <div className="router-problem-card">
@@ -1135,6 +1153,15 @@ const MockExam = ({ onBack }: { onBack: () => void }) => {
               {currentProblem.questionNumber} / 18
             </div>
           </div>
+        </div>
+
+        <div className="progress-bar">
+          <div
+            className="progress-fill"
+            style={{
+              width: `${(currentProblem.questionNumber / 18) * 100}%`,
+            }}
+          ></div>
         </div>
 
         <div className="mock-exam-info">
@@ -2112,6 +2139,19 @@ function App() {
     return (
       <div className="container">
         <div className="quiz-page">
+          <div className="quiz-header">
+            <button
+              className="back-button-small"
+              onClick={() => setPage("menu")}
+            >
+              ← 뒤로
+            </button>
+            <h1 className="quiz-title">✏️ 단답형 문제</h1>
+            <div className="problem-counter">
+              {currentQuestionIndex + 1} / {selectedQuestions.length}
+            </div>
+          </div>
+
           <div className="progress-bar">
             <div
               className="progress-fill"
@@ -2119,10 +2159,7 @@ function App() {
             ></div>
           </div>
 
-          <div className="question-header">
-            <span className="question-number">
-              문제 {currentQuestionIndex + 1} / {selectedQuestions.length}
-            </span>
+          <div className="question-info">
             <span className="current-score">현재 점수: {score}점</span>
           </div>
 

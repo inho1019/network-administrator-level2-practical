@@ -973,7 +973,6 @@ const cableProblems: CableProblem[] = [
 // 윈도우 설정 퀴즈 컴포넌트
 function WindowsSettingsQuiz({ onBack }: { onBack: () => void }) {
   const [showMenu, setShowMenu] = useState(true);
-  const [mode, setMode] = useState<"all" | "random" | null>(null);
   const [selectedProblems, setSelectedProblems] = useState<
     WindowsSettingsProblem[]
   >([]);
@@ -985,7 +984,6 @@ function WindowsSettingsQuiz({ onBack }: { onBack: () => void }) {
   const [availableSteps, setAvailableSteps] = useState<string[]>([]);
 
   const startQuiz = (selectedMode: "all" | "random") => {
-    setMode(selectedMode);
     if (selectedMode === "all") {
       setSelectedProblems(windowsProblems);
     } else {
@@ -1004,11 +1002,14 @@ function WindowsSettingsQuiz({ onBack }: { onBack: () => void }) {
   // 문제가 바뀔 때마다 경로 섞기
   useEffect(() => {
     if (!currentProblem) return;
-    const shuffled = [...currentProblem.accessPath].sort(
-      () => Math.random() - 0.5,
-    );
-    setAvailableSteps(shuffled);
-    setUserPath([]);
+    const shuffleProblem = () => {
+      const shuffled = [...currentProblem.accessPath].sort(
+        () => Math.random() - 0.5,
+      );
+      setAvailableSteps(shuffled);
+      setUserPath([]);
+    };
+    shuffleProblem();
   }, [currentProblem]);
 
   const handleSubmit = () => {
@@ -2323,7 +2324,6 @@ function UserSettingsGUI({
 // 라우터 설정 퀴즈 컴포넌트
 function RouterSettingsQuiz({ onBack }: { onBack: () => void }) {
   const [showMenu, setShowMenu] = useState(true);
-  const [mode, setMode] = useState<"all" | "random" | null>(null);
   const [selectedProblems, setSelectedProblems] = useState<RouterProblem[]>([]);
   const [currentProblemIndex, setCurrentProblemIndex] = useState(0);
   const [userCommands, setUserCommands] = useState<string[]>([]);
@@ -2333,7 +2333,6 @@ function RouterSettingsQuiz({ onBack }: { onBack: () => void }) {
   const [commandHistory, setCommandHistory] = useState<string[]>([]);
 
   const startQuiz = (selectedMode: "all" | "random") => {
-    setMode(selectedMode);
     if (selectedMode === "all") {
       setSelectedProblems(routerProblems);
     } else {

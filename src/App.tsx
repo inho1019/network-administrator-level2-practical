@@ -1017,27 +1017,84 @@ const MockExam = ({ onBack }: { onBack: () => void }) => {
 
           <div className="exam-result-summary">
             <h3>문제별 결과</h3>
-            {examProblems.map((problem, idx) => (
-              <div key={idx} className="exam-result-item">
-                <span className="result-number">
-                  {problem.questionNumber}번
-                </span>
-                <span className="result-type">
-                  {problem.type === "cable"
-                    ? "케이블"
-                    : problem.type === "windows"
-                      ? "윈도우"
-                      : problem.type === "shortAnswer"
-                        ? "단답형"
-                        : "라우터"}
-                </span>
-                <span
-                  className={`result-score ${(scores[idx] || 0) > 0 ? "correct" : "incorrect"}`}
-                >
-                  {(scores[idx] || 0).toFixed(1)} / {problem.points}점
-                </span>
-              </div>
-            ))}
+            {examProblems.map((problem, idx) => {
+              const isCorrect = (scores[idx] || 0) > 0;
+
+              return (
+                <div key={idx} className="exam-result-wrapper">
+                  <div
+                    className={`exam-result-item ${isCorrect ? "correct" : "incorrect"}`}
+                  >
+                    <span className="result-number">
+                      {problem.questionNumber}번
+                    </span>
+                    <span className="result-type">
+                      {problem.type === "cable"
+                        ? "케이블"
+                        : problem.type === "windows"
+                          ? "윈도우"
+                          : problem.type === "shortAnswer"
+                            ? "단답형"
+                            : "라우터"}
+                    </span>
+                    <span
+                      className={`result-score ${isCorrect ? "correct" : "incorrect"}`}
+                    >
+                      {(scores[idx] || 0).toFixed(1)} / {problem.points}점
+                    </span>
+                  </div>
+
+                  {!isCorrect && (
+                    <details className="result-details">
+                      <summary className="details-summary">
+                        ❌ 오답 상세보기
+                      </summary>
+                      <div className="details-content">
+                        {problem.type === "shortAnswer" && (
+                          <>
+                            <p className="problem-title">
+                              ❓ 문제: {problem.problem.question}
+                            </p>
+                            <p className="correct-answer">
+                              ✅ 정답: <span>{problem.problem.answer}</span>
+                            </p>
+                            <p className="answer-description">
+                              💡 해설: {problem.problem.description}
+                            </p>
+                          </>
+                        )}
+                        {problem.type === "windows" && (
+                          <>
+                            <p className="problem-title">
+                              ❓ 문제: {problem.problem.title}
+                            </p>
+                            <p className="correct-answer">
+                              ✅ 설명: {problem.problem.description}
+                            </p>
+                          </>
+                        )}
+                        {problem.type === "router" && (
+                          <>
+                            <p className="problem-title">
+                              ❓ 문제: {problem.problem.question}
+                            </p>
+                            <p className="answer-description">
+                              💡 해설: {problem.problem.explanation}
+                            </p>
+                          </>
+                        )}
+                        {problem.type === "cable" && (
+                          <p className="problem-title">
+                            ❓ 문제: {problem.problem.device1}와{" "}
+                            {problem.problem.device2} 연결
+                          </p>
+                        )}
+                      </div>
+                    </details>
+                  )}
+                </div>
+              );
+            })}
           </div>
 
           {totalScore >= 60 ? (

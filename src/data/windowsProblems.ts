@@ -281,7 +281,7 @@ export const windowsProblems: WindowsSettingsProblem[] = [
     title: "#17 Telnet 서비스 중지",
     description:
       "원격 사용자가 Telnet을 이용하여 파일을 삭제해 왔으나 정책이 변경되어 원격 사용자가 더 이상 로그온 할 필요가 없어졌다. 해당 기능을 중지시키고, 다시 시작할 수 없게 설정하시오.\n\n설정 요구사항:\n시작 유형: 사용안함\n서비스 상태: 중지",
-    accessPath: ["서버 관리자", "도구", "서비스", "Telnet 더블클릭", "일반 탭"],
+    accessPath: ["서버 관리자", "도구", "서비스", "Telnet 더블클릭"],
     correctAnswers: {
       serviceName: "Telnet",
       startupType: "사용안함",

@@ -1049,6 +1049,7 @@ function WindowsSettingsQuiz({ onBack }: { onBack: () => void }) {
 
     return Object.keys(correctAnswers).every((key) => {
       if (key === "groups") return true; // 이미 위에서 체크함
+      if (key === "serviceName") return true; // 서비스 이름은 체크하지 않음 (이미 주어진 값)
       const inputValue = inputs[key as keyof AllAnswerTypes];
       const correctValue = correctAnswers[key as keyof AllAnswerTypes];
       if (correctValue === undefined) return true;

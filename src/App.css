@@ -1112,6 +1112,11 @@ select.windows-input:disabled {
   font-size: 0.95rem;
 }
 
+.terminal-input-line {
+  display: flex;
+  align-items: center;
+}
+
 .terminal-input {
   flex: 1;
   background: transparent;

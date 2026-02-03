@@ -1115,12 +1115,25 @@ const MockExam = ({ onBack }: { onBack: () => void }) => {
     <div className="container">
       <div className="mock-exam-page">
         <div className="mock-exam-header">
-          <button className="back-button-small" onClick={onBack}>
-            ← 뒤로
-          </button>
+          <div>
+            <button className="back-button-small" onClick={onBack}>
+              ← 나가기
+            </button>
+            <button
+              style={{ marginLeft: 10, paddingLeft: 10, paddingRight: 10 }}
+              className="back-button-small"
+              onClick={goToNextProblem}
+            >
+              →
+            </button>
+          </div>
           <h1 className="mock-exam-title">📝 모의고사</h1>
-          <div className="problem-counter">
-            {currentProblem.questionNumber} / 18
+          <div
+            style={{ width: 140, display: "flex", justifyContent: "flex-end" }}
+          >
+            <div className="problem-counter">
+              {currentProblem.questionNumber} / 18
+            </div>
           </div>
         </div>
 
@@ -1636,7 +1649,15 @@ const RouterProblemInExam = ({
   };
 
   const handleSubmit = () => {
-    const result = onSubmit(commands);
+    // 현재 입력 중인 명령어가 있으면 추가
+    let commandsToCheck = commands;
+    if (currentInput.trim()) {
+      commandsToCheck = [...commands, currentInput.trim()];
+      setCommands(commandsToCheck);
+      setCurrentInput("");
+    }
+
+    const result = onSubmit(commandsToCheck);
     setIsCorrect(result);
     setShowResult(true);
   };

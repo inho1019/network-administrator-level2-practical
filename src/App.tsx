@@ -2183,7 +2183,9 @@ const CableMakingQuiz = ({ onBack }: { onBack: () => void }) => {
   const [isCorrect, setIsCorrect] = useState<boolean | null>(null);
   const [showResult, setShowResult] = useState(false);
 
-  const colorKeys = Object.keys(CABLE_COLORS);
+  const [colorKeys] = useState(() =>
+    Object.keys(CABLE_COLORS).sort(() => Math.random() - 0.5),
+  );
 
   const handleColorSelect = (
     side: "side1" | "side2",

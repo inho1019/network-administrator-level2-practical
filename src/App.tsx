@@ -28,7 +28,15 @@ interface NetworkAnswers {
 
 interface WindowsSettingsProblem {
   id: number;
-  type: "network" | "dhcp" | "ftp" | "dns" | "security" | "website" | "user";
+  type:
+    | "network"
+    | "dhcp"
+    | "ftp"
+    | "dns"
+    | "security"
+    | "website"
+    | "user"
+    | "service";
   title: string;
   description: string;
   accessPath: string[]; // GUI 접근 경로
@@ -90,6 +98,13 @@ interface UserAnswers {
   sessionMinutes?: string;
 }
 
+// 서비스 관리 답안 타입
+interface ServiceAnswers {
+  serviceName: string;
+  startupType?: string; // 시작 유형: 자동, 수동, 사용안함
+  serviceStatus?: string; // 서비스 상태: 실행 중, 중지
+}
+
 type AllAnswerTypes =
   | NetworkAnswers
   | DHCPAnswers
@@ -97,7 +112,8 @@ type AllAnswerTypes =
   | DNSAnswers
   | SecurityAnswers
   | WebsiteAnswers
-  | UserAnswers;
+  | UserAnswers
+  | ServiceAnswers;
 
 // 라우터 설정 문제 타입
 interface RouterProblem {
@@ -300,6 +316,148 @@ const windowsProblems: WindowsSettingsProblem[] = [
       password: "P@ssw0rd",
       groups: ["Administrators", "Users"],
       sessionMinutes: "60",
+    },
+  },
+  {
+    id: 9,
+    type: "service",
+    title: "#10 Windows 푸시 알림 시스템 서비스 (2022년 3회)",
+    description:
+      "이 서비스는 세션 0에서 실행되며 디바이스와 WNS 서버 사이의 연결을 처리하는 알림 플랫폼 및 연결 공급자를 호스트합니다.\n\n설정 요구사항:\n시작 유형: 사용안함\n서비스 상태: 중지",
+    accessPath: [
+      "서버 관리자",
+      "도구",
+      "서비스",
+      "Windows Push Notifications System Service 더블클릭",
+      "일반 탭",
+    ],
+    correctAnswers: {
+      serviceName: "Windows Push Notifications System Service",
+      startupType: "사용안함",
+      serviceStatus: "중지",
+    },
+  },
+  {
+    id: 10,
+    type: "service",
+    title: "#11 IP Helper 서비스 (2022년 2회)",
+    description:
+      "IPv6 전환 기술과 IP-HTTPS를 사용하여 터널 연결을 제공합니다.\n\n설정 요구사항:\n서비스 상태: 실행 중",
+    accessPath: [
+      "서버 관리자",
+      "도구",
+      "서비스",
+      "IP Helper 더블클릭",
+      "일반 탭",
+    ],
+    correctAnswers: {
+      serviceName: "IP Helper",
+      serviceStatus: "실행 중",
+    },
+  },
+  {
+    id: 11,
+    type: "service",
+    title: "#12 Windows Process Activation Service (2022년 1회)",
+    description:
+      "메시지로 활성화되는 응용프로그램에 프로세스 활성화, 리소스 관리 및 상태 관리 서비스를 제공합니다.\n\n설정 요구사항:\n서비스 상태: 실행 중",
+    accessPath: [
+      "서버 관리자",
+      "도구",
+      "서비스",
+      "Windows Process Activation Service 더블클릭",
+      "일반 탭",
+    ],
+    correctAnswers: {
+      serviceName: "Windows Process Activation Service",
+      serviceStatus: "실행 중",
+    },
+  },
+  {
+    id: 12,
+    type: "service",
+    title: "#13 Microsoft iSCSI Initiator Service (2021년 3회)",
+    description:
+      "NAS에서 하드디스크로 데이터 전송을 위해 iSCSI 서비스를 실행하고 재부팅 이후에도 서비스가 유지되도록 설정하시오.\n\n설정 요구사항:\n시작 유형: 자동\n서비스 상태: 실행 중",
+    accessPath: [
+      "서버 관리자",
+      "도구",
+      "서비스",
+      "Microsoft iSCSI Initiator Service 더블클릭",
+      "일반 탭",
+    ],
+    correctAnswers: {
+      serviceName: "Microsoft iSCSI Initiator Service",
+      startupType: "자동",
+      serviceStatus: "실행 중",
+    },
+  },
+  {
+    id: 13,
+    type: "service",
+    title: "#14 Encrypting File System (EFS) (2021년 2회)",
+    description:
+      "암호화된 파일을 NTFS 파일 시스템 볼륨에 저장하는데 사용되는 핵심 파일 암호화 기술을 제공합니다. 이 서비스를 중지하거나 사용하지 않도록 설정하면 응용프로그램에서 암호화된 파일에 액세스하지 못하게 됩니다.\n\n설정 요구사항:\n서비스 상태: 실행 중",
+    accessPath: [
+      "서버 관리자",
+      "도구",
+      "서비스",
+      "Encrypting File System (EFS) 더블클릭",
+      "일반 탭",
+    ],
+    correctAnswers: {
+      serviceName: "Encrypting File System (EFS)",
+      serviceStatus: "실행 중",
+    },
+  },
+  {
+    id: 14,
+    type: "service",
+    title: "#15 Performance Logs & Alerts (2021년 1회)",
+    description:
+      "성능 로그 및 경고는 미리 구성된 일정 매개 변수에 따라 로컬 또는 원격 컴퓨터에서 성능 데이터를 수집한 다음 이 데이터를 로그에 기록하거나 경고를 트리거 합니다. 이 서비스가 중지되면 성능 정보가 수집되지 않습니다.\n\n설정 요구사항:\n서비스 상태: 실행 중",
+    accessPath: [
+      "서버 관리자",
+      "도구",
+      "서비스",
+      "Performance Logs & Alerts 더블클릭",
+      "일반 탭",
+    ],
+    correctAnswers: {
+      serviceName: "Performance Logs & Alerts",
+      serviceStatus: "실행 중",
+    },
+  },
+  {
+    id: 15,
+    type: "service",
+    title: "#16 World Wide Web Publishing Service (2020년 2회)",
+    description:
+      "인터넷 정보 서비스 관리자를 사용하여 웹 연결 및 관리를 제공하는 서비스를 현재 시스템에서 '중지'시키고, 시작 유형을 '사용 안함'으로 설정하시오.\n\n설정 요구사항:\n시작 유형: 사용안함\n서비스 상태: 중지",
+    accessPath: [
+      "서버 관리자",
+      "도구",
+      "서비스",
+      "World Wide Web Publishing Service 더블클릭",
+      "일반 탭",
+    ],
+    correctAnswers: {
+      serviceName: "World Wide Web Publishing Service",
+      startupType: "사용안함",
+      serviceStatus: "중지",
+    },
+  },
+  {
+    id: 16,
+    type: "service",
+    title: "#17 Telnet 서비스 중지",
+    description:
+      "원격 사용자가 Telnet을 이용하여 파일을 삭제해 왔으나 정책이 변경되어 원격 사용자가 더 이상 로그온 할 필요가 없어졌다. 해당 기능을 중지시키고, 다시 시작할 수 없게 설정하시오.\n\n설정 요구사항:\n시작 유형: 사용안함\n서비스 상태: 중지",
+    accessPath: ["서버 관리자", "도구", "서비스", "Telnet 더블클릭", "일반 탭"],
+    correctAnswers: {
+      serviceName: "Telnet",
+      startupType: "사용안함",
+      serviceStatus: "중지",
     },
   },
 ];
@@ -814,6 +972,11 @@ const cableProblems: CableProblem[] = [
 
 // 윈도우 설정 퀴즈 컴포넌트
 function WindowsSettingsQuiz({ onBack }: { onBack: () => void }) {
+  const [showMenu, setShowMenu] = useState(true);
+  const [mode, setMode] = useState<"all" | "random" | null>(null);
+  const [selectedProblems, setSelectedProblems] = useState<
+    WindowsSettingsProblem[]
+  >([]);
   const [currentProblemIndex, setCurrentProblemIndex] = useState(0);
   const [userInputs, setUserInputs] = useState<Partial<AllAnswerTypes>>({});
   const [showResult, setShowResult] = useState(false);
@@ -821,16 +984,32 @@ function WindowsSettingsQuiz({ onBack }: { onBack: () => void }) {
   const [userPath, setUserPath] = useState<string[]>([]);
   const [availableSteps, setAvailableSteps] = useState<string[]>([]);
 
-  const currentProblem = windowsProblems[currentProblemIndex];
+  const startQuiz = (selectedMode: "all" | "random") => {
+    setMode(selectedMode);
+    if (selectedMode === "all") {
+      setSelectedProblems(windowsProblems);
+    } else {
+      const shuffled = [...windowsProblems].sort(() => Math.random() - 0.5);
+      setSelectedProblems(shuffled.slice(0, 5));
+    }
+    setShowMenu(false);
+    setCurrentProblemIndex(0);
+    setUserInputs({});
+    setShowResult(false);
+    setIsCorrect(false);
+  };
+
+  const currentProblem = selectedProblems[currentProblemIndex];
 
   // 문제가 바뀔 때마다 경로 섞기
   useEffect(() => {
+    if (!currentProblem) return;
     const shuffled = [...currentProblem.accessPath].sort(
       () => Math.random() - 0.5,
     );
     setAvailableSteps(shuffled);
     setUserPath([]);
-  }, [currentProblemIndex]);
+  }, [currentProblem]);
 
   const handleSubmit = () => {
     const correct = checkWindowsAnswers(currentProblem, userInputs);
@@ -839,12 +1018,11 @@ function WindowsSettingsQuiz({ onBack }: { onBack: () => void }) {
   };
 
   const handleNext = () => {
-    if (currentProblemIndex < windowsProblems.length - 1) {
+    if (currentProblemIndex < selectedProblems.length - 1) {
       setCurrentProblemIndex(currentProblemIndex + 1);
       setUserInputs({});
       setShowResult(false);
       setIsCorrect(false);
-      // useEffect에서 경로가 자동으로 섞임
     }
   };
 
@@ -881,16 +1059,71 @@ function WindowsSettingsQuiz({ onBack }: { onBack: () => void }) {
     });
   };
 
+  // 메뉴 화면
+  if (showMenu) {
+    return (
+      <div className="container">
+        <div className="start-page">
+          <h1 className="title">🪟 윈도우 설정 문제</h1>
+          <p className="subtitle">네트워크, DHCP, DNS, 서비스 관리 등</p>
+
+          <div className="mode-selection">
+            <button
+              className="mode-button all"
+              onClick={() => startQuiz("all")}
+            >
+              <div className="mode-icon">📝</div>
+              <h3>전체 문제 풀기</h3>
+              <p>{windowsProblems.length}문제</p>
+            </button>
+
+            <button
+              className="mode-button random"
+              onClick={() => startQuiz("random")}
+            >
+              <div className="mode-icon">🎲</div>
+              <h3>랜덤 5문제 풀기</h3>
+              <p>5문제</p>
+            </button>
+          </div>
+
+          <div className="info-box">
+            <p>💡 실제 윈도우 서버 설정과 유사한 GUI로 연습하세요</p>
+            <p>💡 접근 경로를 올바르게 정렬해야 합니다</p>
+          </div>
+
+          <button className="back-button" onClick={onBack}>
+            ← 뒤로 가기
+          </button>
+        </div>
+      </div>
+    );
+  }
+
+  // 문제가 없으면 로딩 표시
+  if (!currentProblem) {
+    return (
+      <div className="container">
+        <div className="start-page">
+          <h1 className="title">로딩 중...</h1>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="container">
       <div className="windows-settings-page">
         <div className="windows-header">
-          <button className="back-button-small" onClick={onBack}>
+          <button
+            className="back-button-small"
+            onClick={() => setShowMenu(true)}
+          >
             ← 뒤로
           </button>
           <h1 className="windows-title">🪟 윈도우 설정 문제</h1>
           <div className="problem-counter">
-            {currentProblemIndex + 1} / {windowsProblems.length}
+            {currentProblemIndex + 1} / {selectedProblems.length}
           </div>
         </div>
 
@@ -1061,6 +1294,15 @@ function WindowsSettingsQuiz({ onBack }: { onBack: () => void }) {
             />
           )}
 
+          {currentProblem.type === "service" && (
+            <ServiceSettingsGUI
+              userInputs={userInputs}
+              setUserInputs={setUserInputs}
+              correctAnswers={currentProblem.correctAnswers as ServiceAnswers}
+              showResult={showResult}
+            />
+          )}
+
           <div className="button-group">
             {!showResult ? (
               <button className="submit-button-windows" onClick={handleSubmit}>
@@ -1073,7 +1315,7 @@ function WindowsSettingsQuiz({ onBack }: { onBack: () => void }) {
                     <div className="feedback-message correct">
                       ✅ 정답입니다!
                     </div>
-                    {currentProblemIndex < windowsProblems.length - 1 && (
+                    {currentProblemIndex < selectedProblems.length - 1 && (
                       <button className="next-button" onClick={handleNext}>
                         다음 문제 →
                       </button>
@@ -1845,6 +2087,106 @@ function WebsiteSettingsGUI({
 }
 
 // 사용자 및 그룹 설정 GUI 컴포넌트
+// 서비스 관리 GUI 컴포넌트
+function ServiceSettingsGUI({
+  userInputs,
+  setUserInputs,
+  correctAnswers,
+  showResult,
+}: {
+  userInputs: Partial<AllAnswerTypes>;
+  setUserInputs: (inputs: Partial<AllAnswerTypes>) => void;
+  correctAnswers: ServiceAnswers;
+  showResult: boolean;
+}) {
+  const inputs = userInputs as Partial<ServiceAnswers>;
+
+  const handleChange = (field: keyof ServiceAnswers, value: string) => {
+    setUserInputs({ ...userInputs, [field]: value });
+  };
+
+  const getInputClass = (field: keyof ServiceAnswers) => {
+    if (!showResult) return "windows-input";
+    const inputValue = inputs[field];
+    const correctValue = correctAnswers[field];
+    if (!correctValue) return "windows-input";
+    const isFieldCorrect =
+      String(inputValue)?.toLowerCase().trim() ===
+      String(correctValue)?.toLowerCase().trim();
+    return `windows-input ${isFieldCorrect ? "input-correct" : "input-incorrect"}`;
+  };
+
+  return (
+    <div className="windows-gui-container">
+      <div className="windows-dialog">
+        <div className="dialog-title-bar">
+          <span className="dialog-title">
+            {correctAnswers.serviceName} 속성
+          </span>
+          <div className="title-bar-buttons">
+            <span className="title-button">_</span>
+            <span className="title-button">□</span>
+            <span className="title-button">✕</span>
+          </div>
+        </div>
+
+        <div className="dialog-content">
+          <div className="dialog-section">
+            <h4 className="section-title">서비스 정보</h4>
+
+            <div className="input-group">
+              <label className="input-label">서비스 이름:</label>
+              <input
+                type="text"
+                className="windows-input"
+                value={correctAnswers.serviceName}
+                disabled
+                style={{ backgroundColor: "#e8e8e8" }}
+              />
+            </div>
+
+            {correctAnswers.startupType && (
+              <div className="input-group">
+                <label className="input-label">시작 유형:</label>
+                <select
+                  className={getInputClass("startupType")}
+                  value={inputs.startupType || ""}
+                  onChange={(e) => handleChange("startupType", e.target.value)}
+                  disabled={showResult}
+                >
+                  <option value="">선택하세요</option>
+                  <option value="자동">자동</option>
+                  <option value="수동">수동</option>
+                  <option value="사용안함">사용안함</option>
+                </select>
+              </div>
+            )}
+
+            {correctAnswers.serviceStatus && (
+              <div className="input-group">
+                <label className="input-label">서비스 상태:</label>
+                <select
+                  className={getInputClass("serviceStatus")}
+                  value={inputs.serviceStatus || ""}
+                  onChange={(e) =>
+                    handleChange("serviceStatus", e.target.value)
+                  }
+                  disabled={showResult}
+                >
+                  <option value="">선택하세요</option>
+                  <option value="실행 중">실행 중</option>
+                  <option value="중지">중지</option>
+                </select>
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// 사용자 관리 GUI 컴포넌트
 function UserSettingsGUI({
   userInputs,
   setUserInputs,
@@ -1979,6 +2321,9 @@ function UserSettingsGUI({
 
 // 라우터 설정 퀴즈 컴포넌트
 function RouterSettingsQuiz({ onBack }: { onBack: () => void }) {
+  const [showMenu, setShowMenu] = useState(true);
+  const [mode, setMode] = useState<"all" | "random" | null>(null);
+  const [selectedProblems, setSelectedProblems] = useState<RouterProblem[]>([]);
   const [currentProblemIndex, setCurrentProblemIndex] = useState(0);
   const [userCommands, setUserCommands] = useState<string[]>([]);
   const [currentCommand, setCurrentCommand] = useState("");
@@ -1986,7 +2331,24 @@ function RouterSettingsQuiz({ onBack }: { onBack: () => void }) {
   const [isCorrect, setIsCorrect] = useState(false);
   const [commandHistory, setCommandHistory] = useState<string[]>([]);
 
-  const currentProblem = routerProblems[currentProblemIndex];
+  const startQuiz = (selectedMode: "all" | "random") => {
+    setMode(selectedMode);
+    if (selectedMode === "all") {
+      setSelectedProblems(routerProblems);
+    } else {
+      const shuffled = [...routerProblems].sort(() => Math.random() - 0.5);
+      setSelectedProblems(shuffled.slice(0, 5));
+    }
+    setShowMenu(false);
+    setCurrentProblemIndex(0);
+    setUserCommands([]);
+    setCurrentCommand("");
+    setShowResult(false);
+    setIsCorrect(false);
+    setCommandHistory([]);
+  };
+
+  const currentProblem = selectedProblems[currentProblemIndex];
 
   const handleCommandSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -2020,7 +2382,7 @@ function RouterSettingsQuiz({ onBack }: { onBack: () => void }) {
   };
 
   const handleNext = () => {
-    if (currentProblemIndex < routerProblems.length - 1) {
+    if (currentProblemIndex < selectedProblems.length - 1) {
       setCurrentProblemIndex(currentProblemIndex + 1);
       setUserCommands([]);
       setCurrentCommand("");
@@ -2228,16 +2590,60 @@ function RouterSettingsQuiz({ onBack }: { onBack: () => void }) {
     });
   };
 
+  // 메뉴 화면
+  if (showMenu) {
+    return (
+      <div className="container">
+        <div className="start-page">
+          <h1 className="title">🔧 라우터 설정 문제</h1>
+          <p className="subtitle">Cisco IOS 명령어 연습</p>
+
+          <div className="mode-selection">
+            <button
+              className="mode-button all"
+              onClick={() => startQuiz("all")}
+            >
+              <div className="mode-icon">📝</div>
+              <h3>전체 문제 풀기</h3>
+              <p>{routerProblems.length}문제</p>
+            </button>
+
+            <button
+              className="mode-button random"
+              onClick={() => startQuiz("random")}
+            >
+              <div className="mode-icon">🎲</div>
+              <h3>랜덤 5문제 풀기</h3>
+              <p>5문제</p>
+            </button>
+          </div>
+
+          <div className="info-box">
+            <p>💡 Cisco IOS 명령어를 순서대로 입력하세요</p>
+            <p>💡 축약형 명령어도 인식됩니다</p>
+          </div>
+
+          <button className="back-button" onClick={onBack}>
+            ← 뒤로 가기
+          </button>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="container">
       <div className="router-settings-page">
         <div className="router-header">
-          <button className="back-button-small" onClick={onBack}>
+          <button
+            className="back-button-small"
+            onClick={() => setShowMenu(true)}
+          >
             ← 뒤로
           </button>
           <h1 className="router-title">🔧 라우터 설정 문제</h1>
           <div className="problem-counter">
-            {currentProblemIndex + 1} / {routerProblems.length}
+            {currentProblemIndex + 1} / {selectedProblems.length}
           </div>
         </div>
 
@@ -2320,7 +2726,7 @@ function RouterSettingsQuiz({ onBack }: { onBack: () => void }) {
                       <h4>💡 해설</h4>
                       <p>{currentProblem.explanation}</p>
                     </div>
-                    {currentProblemIndex < routerProblems.length - 1 && (
+                    {currentProblemIndex < selectedProblems.length - 1 && (
                       <button className="next-button" onClick={handleNext}>
                         다음 문제 →
                       </button>
@@ -2350,7 +2756,7 @@ function RouterSettingsQuiz({ onBack }: { onBack: () => void }) {
                       <button className="retry-button" onClick={handleReset}>
                         다시 시도
                       </button>
-                      {currentProblemIndex < routerProblems.length - 1 && (
+                      {currentProblemIndex < selectedProblems.length - 1 && (
                         <button className="skip-button" onClick={handleNext}>
                           건너뛰기 →
                         </button>

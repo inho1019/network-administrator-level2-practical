@@ -805,6 +805,20 @@ body {
   color: #666;
 }
 
+/* select도 windows-input 스타일 적용 */
+select.windows-input {
+  cursor: pointer;
+  appearance: none;
+  background-image: url('data:image/svg+xml;utf8,<svg fill="%23333" height="20" viewBox="0 0 24 24" width="20" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/></svg>');
+  background-repeat: no-repeat;
+  background-position: right 8px center;
+  padding-right: 32px;
+}
+
+select.windows-input:disabled {
+  cursor: not-allowed;
+}
+
 .input-correct {
   border: 2px solid #28a745 !important;
   background: #d4edda !important;

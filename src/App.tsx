@@ -2826,7 +2826,9 @@ const CableProblemInExam = ({
   const [side2Wires, setSide2Wires] = useState<string[]>(Array(8).fill(""));
   const [isCorrect, setIsCorrect] = useState(false);
 
-  const colorKeys = Object.keys(CABLE_COLORS);
+  const [colorKeys] = useState(() =>
+    Object.keys(CABLE_COLORS).sort(() => Math.random() - 0.5),
+  );
 
   const handleColorSelect = (
     side: "side1" | "side2",

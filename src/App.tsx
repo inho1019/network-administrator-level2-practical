@@ -880,9 +880,9 @@ const MockExam = ({ onBack }: { onBack: () => void }) => {
     });
 
     // 2~9번: 윈도우 설정 (8문제, 각 5점)
-    const shuffledWindows = [...windowsProblems].sort(
-      () => Math.random() - 0.5,
-    );
+    const shuffledWindows = [...windowsProblems]
+      .sort(() => Math.random() - 0.5)
+      .slice(0, 8);
     shuffledWindows.forEach((problem, idx) => {
       problems.push({
         type: "windows",
@@ -1086,6 +1086,7 @@ const MockExam = ({ onBack }: { onBack: () => void }) => {
 
         {currentProblem.type === "cable" && (
           <CableProblemInExam
+            key={`cable-${currentProblemIndex}`}
             problem={currentProblem.problem}
             onSubmit={handleCableSubmit}
             onNext={goToNextProblem}
@@ -1096,6 +1097,7 @@ const MockExam = ({ onBack }: { onBack: () => void }) => {
 
         {currentProblem.type === "windows" && (
           <WindowsProblemInExam
+            key={`windows-${currentProblemIndex}`}
             problem={currentProblem.problem}
             onSubmit={handleWindowsSubmit}
             onNext={goToNextProblem}
@@ -1106,6 +1108,7 @@ const MockExam = ({ onBack }: { onBack: () => void }) => {
 
         {currentProblem.type === "shortAnswer" && (
           <ShortAnswerProblemInExam
+            key={`short-${currentProblemIndex}`}
             problem={currentProblem.problem}
             onSubmit={handleShortAnswerSubmit}
             onNext={goToNextProblem}
@@ -1116,6 +1119,7 @@ const MockExam = ({ onBack }: { onBack: () => void }) => {
 
         {currentProblem.type === "router" && (
           <RouterProblemInExam
+            key={`router-${currentProblemIndex}`}
             problem={currentProblem.problem}
             onSubmit={handleRouterSubmit}
             onNext={goToNextProblem}
@@ -1361,6 +1365,15 @@ const WindowsProblemInExam = ({
             showResult={showResult}
           />
         );
+      case "service":
+        return (
+          <ServiceSettingsGUI
+            userInputs={userInputs}
+            setUserInputs={setUserInputs}
+            correctAnswers={problem.correctAnswers as ServiceAnswers}
+            showResult={showResult}
+          />
+        );
       default:
         return null;
     }
@@ -1505,7 +1518,6 @@ const ShortAnswerProblemInExam = ({
     <div className="exam-problem-content">
       <h2 className="exam-problem-title">단답형</h2>
       <p className="exam-problem-question">{problem.question}</p>
-      <p className="exam-problem-hint">💡 {problem.description}</p>
 
       <input
         type="text"
@@ -1577,6 +1589,12 @@ const RouterProblemInExam = ({
     setCurrentInput("");
   };
 
+  const removeLastCommand = () => {
+    if (commands.length > 0) {
+      setCommands(commands.slice(0, -1));
+    }
+  };
+
   return (
     <div className="exam-problem-content">
       <div className="exam-problem-category">{problem.category}</div>
@@ -1585,7 +1603,12 @@ const RouterProblemInExam = ({
 
       <div className="router-terminal">
         <div className="terminal-header">
-          <span>Router Configuration</span>
+          <div className="terminal-buttons">
+            <span className="terminal-button red"></span>
+            <span className="terminal-button yellow"></span>
+            <span className="terminal-button green"></span>
+          </div>
+          <span className="terminal-title">Router CLI</span>
         </div>
         <div className="terminal-body">
           <div className="terminal-output">
@@ -1611,15 +1634,20 @@ const RouterProblemInExam = ({
         </div>
       </div>
 
-      <div className="terminal-hint">💡 {problem.explanation}</div>
-
       {!showResult ? (
         <div className="exam-terminal-controls">
-          <button onClick={handleSubmit} className="submit-exam-button">
-            제출
+          <button
+            onClick={removeLastCommand}
+            className="clear-exam-button"
+            disabled={commands.length === 0}
+          >
+            한줄 지우기
           </button>
           <button onClick={clearCommands} className="clear-exam-button">
             초기화
+          </button>
+          <button onClick={handleSubmit} className="submit-exam-button">
+            제출
           </button>
         </div>
       ) : (

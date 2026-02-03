@@ -471,6 +471,206 @@ body {
   margin-bottom: 15px;
 }
 
+/* 접근 경로 스타일 */
+.access-path-container {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 20px;
+  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.2);
+}
+
+.access-path-label {
+  color: white;
+  font-size: 0.9rem;
+  font-weight: 600;
+  margin-bottom: 12px;
+  opacity: 0.95;
+}
+
+.access-path {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+
+.path-step {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255, 255, 255, 0.2);
+  color: white;
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  font-weight: 500;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  transition: all 0.2s ease;
+}
+
+.path-step:hover {
+  background: rgba(255, 255, 255, 0.3);
+  transform: translateY(-2px);
+}
+
+.path-arrow {
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+/* 접근 경로 퀴즈 스타일 */
+.access-path-quiz {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: 12px;
+  padding: 25px;
+  margin-bottom: 20px;
+  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.2);
+}
+
+.path-drop-zone {
+  background: rgba(255, 255, 255, 0.15);
+  border: 2px dashed rgba(255, 255, 255, 0.4);
+  border-radius: 10px;
+  padding: 20px;
+  margin: 15px 0;
+  min-height: 100px;
+}
+
+.drop-zone-label {
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 0.85rem;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+.user-path-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+  min-height: 60px;
+}
+
+.path-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 18px;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  user-select: none;
+}
+
+.path-item.option {
+  background: rgba(255, 255, 255, 0.9);
+  color: #667eea;
+  border: 2px solid transparent;
+}
+
+.path-item.option:hover {
+  background: white;
+  border-color: #667eea;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.path-item.placed {
+  background: rgba(255, 255, 255, 0.25);
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  backdrop-filter: blur(10px);
+}
+
+.path-item.placed:hover {
+  background: rgba(255, 255, 255, 0.35);
+  transform: translateY(-2px);
+}
+
+.path-number {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  font-size: 0.8rem;
+  font-weight: 700;
+  margin-right: 4px;
+}
+
+.empty-placeholder {
+  color: rgba(255, 255, 255, 0.6);
+  font-style: italic;
+  text-align: center;
+  width: 100%;
+  padding: 20px;
+}
+
+.path-options {
+  margin-top: 20px;
+}
+
+.options-label {
+  color: white;
+  font-size: 0.9rem;
+  font-weight: 600;
+  margin-bottom: 12px;
+  opacity: 0.95;
+}
+
+.options-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+/* 결과 표시 스타일 */
+.access-path-result {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 20px;
+  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.2);
+}
+
+.correct-path {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+
+.user-wrong-path {
+  margin-top: 15px;
+  padding-top: 15px;
+  border-top: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.wrong-path-label {
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 0.85rem;
+  margin-bottom: 10px;
+}
+
+.wrong-path {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+
+.path-step.wrong {
+  background: rgba(255, 100, 100, 0.3);
+  border-color: rgba(255, 100, 100, 0.5);
+}
+
 .problem-description {
   background: white;
   padding: 20px;

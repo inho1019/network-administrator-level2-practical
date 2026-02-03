@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "./App.css";
 
 interface Question {
@@ -31,6 +31,7 @@ interface WindowsSettingsProblem {
   type: "network" | "dhcp" | "ftp" | "dns" | "security" | "website" | "user";
   title: string;
   description: string;
+  accessPath: string[]; // GUI 접근 경로
   correctAnswers: AllAnswerTypes;
 }
 
@@ -150,6 +151,14 @@ const windowsProblems: WindowsSettingsProblem[] = [
     title: "#1 네트워크 속성 설정",
     description:
       "네트워크: 192.168.100.56/29\n서브넷 마스크: /29에 해당하는 값\nIP: 사용 가능한 첫번째 호스트 IP 주소\nGateway: 사용 가능한 마지막 호스트 IP 주소",
+    accessPath: [
+      "제어판",
+      "네트워크 및 인터넷",
+      "네트워크 연결",
+      "이더넷 우클릭",
+      "속성",
+      "IPv4 속성",
+    ],
     correctAnswers: {
       ip: "192.168.100.57",
       subnet: "255.255.255.248",
@@ -162,6 +171,14 @@ const windowsProblems: WindowsSettingsProblem[] = [
     title: "#2 네트워크 속성 설정",
     description:
       "IP: 192.168.100.59\nSubnet: 하나의 서브넷은 6개의 호스트를 갖는다\nGateway: 192.168.100.62\nDNS: 192.168.100.245",
+    accessPath: [
+      "제어판",
+      "네트워크 및 인터넷",
+      "네트워크 연결",
+      "이더넷 우클릭",
+      "속성",
+      "IPv4 속성",
+    ],
     correctAnswers: {
       ip: "192.168.100.59",
       subnet: "255.255.255.248",
@@ -175,6 +192,7 @@ const windowsProblems: WindowsSettingsProblem[] = [
     title: "#3 DHCP 서버 설정",
     description:
       "범위 이름: TestScope\n시작 IP: 192.168.100.100\n종료 IP: 192.168.100.200\n서브넷 마스크: 255.255.255.0\n제외 IP 시작: 192.168.100.150\n제외 IP 종료: 192.168.100.160\n임대 기간: 8시간\n게이트웨이: 192.168.100.1",
+    accessPath: ["서버 관리자", "도구", "DHCP", "IPv4 우클릭", "새 범위"],
     correctAnswers: {
       startIP: "192.168.100.100",
       endIP: "192.168.100.200",
@@ -191,6 +209,13 @@ const windowsProblems: WindowsSettingsProblem[] = [
     title: "#4 FTP 사이트 설정",
     description:
       "FTP 사이트 이름: MyFTPSite\nIP 주소: 192.168.100.50\n포트: 21\n시작 메시지: Welcome to FTP Server\n종료 메시지: Goodbye",
+    accessPath: [
+      "서버 관리자",
+      "도구",
+      "IIS(인터넷 정보 서비스) 관리자",
+      "사이트 우클릭",
+      "FTP 사이트 추가",
+    ],
     correctAnswers: {
       siteName: "MyFTPSite",
       ip: "192.168.100.50",
@@ -205,6 +230,13 @@ const windowsProblems: WindowsSettingsProblem[] = [
     title: "#6 DNS 설정",
     description:
       "영역 이름: test.com\n영역 유형: 주 영역\n호스트 이름: www\n호스트 IP: 192.168.100.10",
+    accessPath: [
+      "서버 관리자",
+      "도구",
+      "DNS",
+      "정방향 조회 영역 우클릭",
+      "새 영역",
+    ],
     correctAnswers: {
       zoneName: "test.com",
       zoneType: "주 영역",
@@ -218,6 +250,7 @@ const windowsProblems: WindowsSettingsProblem[] = [
     title: "#7 로컬 보안 정책 설정",
     description:
       "로그온 시 표시할 메시지: Authorized Access Only\n최소 암호 사용 기간: 7일\n최대 암호 사용 기간: 42일\n계정 잠금 임계값: 5회\n계정 잠금 기간: 30분",
+    accessPath: ["제어판", "관리 도구", "로컬 보안 정책", "로컬 정책"],
     correctAnswers: {
       loginMessage: "Authorized Access Only",
       minPasswordAge: "7",
@@ -232,6 +265,13 @@ const windowsProblems: WindowsSettingsProblem[] = [
     title: "#8 웹사이트 추가 설정",
     description:
       "사이트 이름: TestWebSite\nIP 주소: 192.168.100.80\n포트: 80\n실제 경로: C:\\inetpub\\wwwroot\n기본 문서: index.html",
+    accessPath: [
+      "서버 관리자",
+      "도구",
+      "IIS(인터넷 정보 서비스) 관리자",
+      "사이트 우클릭",
+      "웹 사이트 추가",
+    ],
     correctAnswers: {
       siteName: "TestWebSite",
       ip: "192.168.100.80",
@@ -246,6 +286,14 @@ const windowsProblems: WindowsSettingsProblem[] = [
     title: "#9 로컬 사용자 및 그룹 설정",
     description:
       "사용자 이름: testuser\n전체 이름: Test User\n암호: P@ssw0rd\n소속 그룹: Administrators, Users\n세션 제한: 60분",
+    accessPath: [
+      "제어판",
+      "관리 도구",
+      "컴퓨터 관리",
+      "로컬 사용자 및 그룹",
+      "사용자 우클릭",
+      "새 사용자",
+    ],
     correctAnswers: {
       username: "testuser",
       fullName: "Test User",
@@ -770,8 +818,19 @@ function WindowsSettingsQuiz({ onBack }: { onBack: () => void }) {
   const [userInputs, setUserInputs] = useState<Partial<AllAnswerTypes>>({});
   const [showResult, setShowResult] = useState(false);
   const [isCorrect, setIsCorrect] = useState(false);
+  const [userPath, setUserPath] = useState<string[]>([]);
+  const [availableSteps, setAvailableSteps] = useState<string[]>([]);
 
   const currentProblem = windowsProblems[currentProblemIndex];
+
+  // 문제가 바뀔 때마다 경로 섞기
+  useEffect(() => {
+    const shuffled = [...currentProblem.accessPath].sort(
+      () => Math.random() - 0.5,
+    );
+    setAvailableSteps(shuffled);
+    setUserPath([]);
+  }, [currentProblemIndex]);
 
   const handleSubmit = () => {
     const correct = checkWindowsAnswers(currentProblem, userInputs);
@@ -785,6 +844,7 @@ function WindowsSettingsQuiz({ onBack }: { onBack: () => void }) {
       setUserInputs({});
       setShowResult(false);
       setIsCorrect(false);
+      // useEffect에서 경로가 자동으로 섞임
     }
   };
 
@@ -793,6 +853,13 @@ function WindowsSettingsQuiz({ onBack }: { onBack: () => void }) {
     inputs: Partial<AllAnswerTypes>,
   ): boolean => {
     const { correctAnswers } = problem;
+
+    // 접근 경로 체크
+    if (userPath.length !== problem.accessPath.length) return false;
+    const pathCorrect = problem.accessPath.every(
+      (step, index) => step === userPath[index],
+    );
+    if (!pathCorrect) return false;
 
     // 배열 비교 (groups 필드)
     if ("groups" in correctAnswers && Array.isArray(correctAnswers.groups)) {
@@ -829,6 +896,102 @@ function WindowsSettingsQuiz({ onBack }: { onBack: () => void }) {
 
         <div className="windows-problem-card">
           <h2 className="problem-title">{currentProblem.title}</h2>
+
+          {/* 접근 경로 드래그 앤 드롭 */}
+          {!showResult && (
+            <div className="access-path-quiz">
+              <div className="access-path-label">
+                📍 설정 화면 접근 경로를 순서대로 정렬하세요
+              </div>
+
+              {/* 사용자가 정렬한 경로 */}
+              <div className="path-drop-zone">
+                <div className="drop-zone-label">
+                  여기에 순서대로 클릭하세요
+                </div>
+                <div className="user-path-container">
+                  {userPath.map((step, index) => (
+                    <div
+                      key={`user-${index}`}
+                      className="path-item placed"
+                      onClick={() => {
+                        // 클릭하면 다시 보기로 돌아감
+                        setUserPath(userPath.filter((_, i) => i !== index));
+                        setAvailableSteps([...availableSteps, step]);
+                      }}
+                    >
+                      <span className="path-number">{index + 1}</span>
+                      {step}
+                      {index < userPath.length - 1 && (
+                        <span className="path-arrow">→</span>
+                      )}
+                    </div>
+                  ))}
+                  {userPath.length === 0 && (
+                    <div className="empty-placeholder">
+                      경로 단계를 선택해주세요
+                    </div>
+                  )}
+                </div>
+              </div>
+
+              {/* 선택 가능한 경로 단계 */}
+              <div className="path-options">
+                <div className="options-label">선택 가능한 단계</div>
+                <div className="options-container">
+                  {availableSteps.map((step, index) => (
+                    <div
+                      key={`option-${index}`}
+                      className="path-item option"
+                      onClick={() => {
+                        setUserPath([...userPath, step]);
+                        setAvailableSteps(
+                          availableSteps.filter((_, i) => i !== index),
+                        );
+                      }}
+                    >
+                      {step}
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* 결과 표시 시 정답 경로 보여주기 */}
+          {showResult && (
+            <div className="access-path-result">
+              <div className="access-path-label">
+                {isCorrect ? "✅ 올바른 접근 경로" : "❌ 정답 접근 경로"}
+              </div>
+              <div className="correct-path">
+                {currentProblem.accessPath.map((step, index) => (
+                  <span key={index} className="path-step">
+                    {step}
+                    {index < currentProblem.accessPath.length - 1 && (
+                      <span className="path-arrow">→</span>
+                    )}
+                  </span>
+                ))}
+              </div>
+              {!isCorrect && userPath.length > 0 && (
+                <div className="user-wrong-path">
+                  <div className="wrong-path-label">입력한 경로:</div>
+                  <div className="wrong-path">
+                    {userPath.map((step, index) => (
+                      <span key={index} className="path-step wrong">
+                        {step}
+                        {index < userPath.length - 1 && (
+                          <span className="path-arrow">→</span>
+                        )}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
+          )}
+
           <div className="problem-description">
             {currentProblem.description.split("\n").map((line, i) => (
               <p key={i}>{line}</p>

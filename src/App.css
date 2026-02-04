@@ -770,25 +770,6 @@ body {
   gap: 10px;
 }
 
-/* 선택 가능한 단계 (모의고사용) */
-.available-steps {
-  margin-top: 20px;
-}
-
-.available-steps-label {
-  color: white;
-  font-size: 0.9rem;
-  font-weight: 600;
-  margin-bottom: 12px;
-  opacity: 0.95;
-}
-
-.steps-container {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-}
-
 /* 결과 표시 스타일 */
 .access-path-result {
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);

@@ -1521,9 +1521,9 @@ const WindowsProblemInExam = ({
           </div>
 
           {/* 선택 가능한 경로 단계들 (섞인 상태) */}
-          <div className="available-steps">
-            <div className="available-steps-label">선택 가능한 단계</div>
-            <div className="steps-container">
+          <div className="path-options">
+            <div className="options-label">선택 가능한 단계</div>
+            <div className="options-container">
               {availableSteps.map((step, index) => (
                 <div
                   key={`option-${index}`}

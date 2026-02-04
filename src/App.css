@@ -1406,21 +1406,21 @@ select.windows-input:disabled {
 /* 반응형 디자인 */
 @media (max-width: 768px) {
   .container {
-    padding: 15px;
+    padding: 5px;
   }
 
   .start-page,
   .quiz-page,
   .result-page {
-    padding: 25px;
+    padding: 15px;
   }
 
   .title {
-    font-size: 1.8rem;
+    font-size: 1.6rem;
   }
 
   .subtitle {
-    font-size: 1rem;
+    font-size: 0.9rem;
   }
 
   .mode-selection {
@@ -1428,35 +1428,35 @@ select.windows-input:disabled {
   }
 
   .mode-icon {
-    font-size: 2.5rem;
+    font-size: 2.2rem;
   }
 
   .mode-button h3 {
-    font-size: 1.1rem;
+    font-size: 1rem;
   }
 
   .question-text {
-    font-size: 1.2rem;
+    font-size: 1.1rem;
   }
 
   .result-emoji {
-    font-size: 3.5rem;
-  }
-
-  .result-title {
-    font-size: 1.5rem;
-  }
-
-  .score-value {
     font-size: 3rem;
   }
 
+  .result-title {
+    font-size: 1.3rem;
+  }
+
+  .score-value {
+    font-size: 2.5rem;
+  }
+
   .score-max {
-    font-size: 1.2rem;
+    font-size: 1.1rem;
   }
 
   .review-title {
-    font-size: 1.5rem;
+    font-size: 1.3rem;
   }
 }
 
@@ -1464,7 +1464,7 @@ select.windows-input:disabled {
   .start-page,
   .quiz-page,
   .result-page {
-    padding: 20px;
+    padding: 12px;
   }
 
   .title {
@@ -1472,7 +1472,7 @@ select.windows-input:disabled {
   }
 
   .mode-button {
-    padding: 25px 15px;
+    padding: 20px 12px;
   }
 
   .question-text {
@@ -1764,8 +1764,8 @@ select.windows-input:disabled {
 
 @media (max-width: 768px) {
   .cable-making-page {
-    padding: 20px;
-    margin: 10px;
+    padding: 15px;
+    margin: 5px;
   }
 
   .cable-header {
@@ -2239,8 +2239,8 @@ details[open] .details-summary::before {
 
 @media (max-width: 768px) {
   .mock-exam-page {
-    padding: 20px;
-    margin: 10px;
+    padding: 15px;
+    margin: 5px;
     min-width: auto;
   }
 
@@ -2249,7 +2249,7 @@ details[open] .details-summary::before {
   }
 
   .mock-exam-title {
-    font-size: 1.3rem;
+    font-size: 1.2rem;
   }
 
   .mock-exam-info {
@@ -2262,15 +2262,83 @@ details[open] .details-summary::before {
   }
 
   .info-value {
-    font-size: 1.1rem;
+    font-size: 1rem;
   }
 
   .exam-problem-content {
-    padding: 20px;
+    padding: 15px;
+    overflow-x: hidden;
   }
 
   .exam-problem-title {
-    font-size: 1.2rem;
+    font-size: 1.1rem;
+  }
+
+  .windows-gui-container {
+    margin: 15px 0;
+  }
+
+  .windows-dialog {
+    max-width: 100%;
+    overflow-x: auto;
+  }
+
+  .dialog-content {
+    padding: 15px;
+    max-width: 100%;
+    overflow-x: hidden;
+  }
+
+  .windows-input,
+  .windows-select {
+    max-width: 100%;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .input-group {
+    width: 100%;
+    max-width: 100%;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+    margin-left: 0;
+    margin-bottom: 15px;
+  }
+
+  .input-label {
+    width: 100%;
+    font-size: 0.8rem;
+    margin-bottom: 0;
+  }
+
+  .access-path-quiz {
+    padding: 15px;
+    margin-bottom: 15px;
+  }
+
+  .path-drop-zone {
+    padding: 15px;
+  }
+
+  .path-item {
+    padding: 8px 12px;
+    font-size: 0.8rem;
+  }
+
+  .path-number {
+    width: 20px;
+    height: 20px;
+    font-size: 0.7rem;
+  }
+
+  .path-options,
+  .options-container {
+    overflow-x: auto;
+  }
+
+  .options-container {
+    gap: 8px;
   }
 
   .exam-terminal-controls {

@@ -73,13 +73,12 @@ export const routerProblems: RouterProblem[] = [
       "configure terminal",
       "interface fastethernet 0/0",
       "ip address 192.168.0.100 255.255.255.0",
-      "no shutdown",
       "exit",
       "exit",
       "copy running-config startup-config",
     ],
     explanation:
-      "인터페이스 IP 설정: int fa0/0 → ip address [IP] [서브넷마스크] → no sh",
+      "인터페이스 IP 설정: int fa0/0 → ip address [IP] [서브넷마스크]",
   },
   {
     id: 6,

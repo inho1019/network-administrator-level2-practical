@@ -7,4 +7,8 @@ export {
   WebsiteSettingsGUI,
   UserSettingsGUI,
   ServiceSettingsGUI,
+  FirewallSettingsGUI,
+  ShareSettingsGUI,
+  DiskSettingsGUI,
+  IISSettingsGUI,
 } from "./WindowsGUIComponents";

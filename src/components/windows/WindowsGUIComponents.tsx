@@ -8,6 +8,10 @@ import type {
   WebsiteAnswers,
   UserAnswers,
   ServiceAnswers,
+  FirewallAnswers,
+  ShareAnswers,
+  DiskAnswers,
+  IISAnswers,
 } from "../../types";
 
 // 네트워크 설정 GUI 컴포넌트
@@ -65,7 +69,6 @@ export function NetworkSettingsGUI({
                 className={getInputClass("ip")}
                 value={inputs.ip || ""}
                 onChange={(e) => handleChange("ip", e.target.value)}
-                placeholder="192.168.100.57"
                 disabled={showResult}
               />
             </div>
@@ -77,7 +80,6 @@ export function NetworkSettingsGUI({
                 className={getInputClass("subnet")}
                 value={inputs.subnet || ""}
                 onChange={(e) => handleChange("subnet", e.target.value)}
-                placeholder="255.255.255.0"
                 disabled={showResult}
               />
             </div>
@@ -89,7 +91,6 @@ export function NetworkSettingsGUI({
                 className={getInputClass("gateway")}
                 value={inputs.gateway || ""}
                 onChange={(e) => handleChange("gateway", e.target.value)}
-                placeholder="192.168.100.1"
                 disabled={showResult}
               />
             </div>
@@ -109,7 +110,6 @@ export function NetworkSettingsGUI({
                   className={getInputClass("dns")}
                   value={inputs.dns || ""}
                   onChange={(e) => handleChange("dns", e.target.value)}
-                  placeholder="8.8.8.8"
                   disabled={showResult}
                 />
               </div>
@@ -441,7 +441,6 @@ export function DNSSettingsGUI({
                 className={getInputClass("zoneType")}
                 value={inputs.zoneType || ""}
                 onChange={(e) => handleChange("zoneType", e.target.value)}
-                placeholder="주 영역"
                 disabled={showResult}
               />
             </div>
@@ -836,7 +835,6 @@ export function UserSettingsGUI({
                 className={getInputClass("groups")}
                 value={inputs.groups?.join(", ") || ""}
                 onChange={(e) => handleGroupsChange(e.target.value)}
-                placeholder="Administrators, Users"
                 disabled={showResult}
               />
             </div>
@@ -955,6 +953,429 @@ export function ServiceSettingsGUI({
                   <option value="">선택하세요</option>
                   <option value="실행 중">실행 중</option>
                   <option value="중지">중지</option>
+                </select>
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// 방화벽 설정 GUI 컴포넌트
+export function FirewallSettingsGUI({
+  userInputs,
+  setUserInputs,
+  correctAnswers,
+  showResult,
+}: {
+  userInputs: Partial<AllAnswerTypes>;
+  setUserInputs: (inputs: Partial<AllAnswerTypes>) => void;
+  correctAnswers: FirewallAnswers;
+  showResult: boolean;
+}) {
+  const inputs = userInputs as Partial<FirewallAnswers>;
+
+  const handleChange = (field: keyof FirewallAnswers, value: string) => {
+    setUserInputs({ ...userInputs, [field]: value });
+  };
+
+  const getInputClass = (field: keyof FirewallAnswers) => {
+    if (!showResult) return "windows-input";
+    const inputValue = inputs[field];
+    const correctValue = correctAnswers[field];
+    if (!correctValue) return "windows-input";
+    const isFieldCorrect =
+      String(inputValue)?.toLowerCase().trim() ===
+      String(correctValue)?.toLowerCase().trim();
+    return `windows-input ${isFieldCorrect ? "input-correct" : "input-incorrect"}`;
+  };
+
+  return (
+    <div className="windows-gui-container">
+      <div className="windows-dialog">
+        <div className="dialog-title-bar">
+          <span className="dialog-title">새 인바운드/아웃바운드 규칙</span>
+          <div className="title-bar-buttons">
+            <span className="title-button">_</span>
+            <span className="title-button">□</span>
+            <span className="title-button">✕</span>
+          </div>
+        </div>
+
+        <div className="dialog-content">
+          <div className="dialog-section">
+            <h4 className="section-title">방화벽 규칙 설정</h4>
+
+            <div className="input-group">
+              <label className="input-label">규칙 이름:</label>
+              <input
+                type="text"
+                className={getInputClass("ruleName")}
+                value={inputs.ruleName || ""}
+                onChange={(e) => handleChange("ruleName", e.target.value)}
+                disabled={showResult}
+              />
+            </div>
+
+            <div className="input-group">
+              <label className="input-label">포트 번호:</label>
+              <input
+                type="text"
+                className={getInputClass("port")}
+                value={inputs.port || ""}
+                onChange={(e) => handleChange("port", e.target.value)}
+                disabled={showResult}
+              />
+            </div>
+
+            <div className="input-group">
+              <label className="input-label">프로토콜:</label>
+              <select
+                className={getInputClass("protocol")}
+                value={inputs.protocol || ""}
+                onChange={(e) => handleChange("protocol", e.target.value)}
+                disabled={showResult}
+              >
+                <option value="">선택하세요</option>
+                <option value="TCP">TCP</option>
+                <option value="UDP">UDP</option>
+              </select>
+            </div>
+
+            <div className="input-group">
+              <label className="input-label">작업:</label>
+              <select
+                className={getInputClass("action")}
+                value={inputs.action || ""}
+                onChange={(e) => handleChange("action", e.target.value)}
+                disabled={showResult}
+              >
+                <option value="">선택하세요</option>
+                <option value="연결 허용">연결 허용</option>
+                <option value="연결 차단">연결 차단</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// 공유 폴더 설정 GUI 컴포넌트
+export function ShareSettingsGUI({
+  userInputs,
+  setUserInputs,
+  correctAnswers,
+  showResult,
+}: {
+  userInputs: Partial<AllAnswerTypes>;
+  setUserInputs: (inputs: Partial<AllAnswerTypes>) => void;
+  correctAnswers: ShareAnswers;
+  showResult: boolean;
+}) {
+  const inputs = userInputs as Partial<ShareAnswers>;
+
+  const handleChange = (field: keyof ShareAnswers, value: string) => {
+    setUserInputs({ ...userInputs, [field]: value });
+  };
+
+  const getInputClass = (field: keyof ShareAnswers) => {
+    if (!showResult) return "windows-input";
+    const inputValue = inputs[field];
+    const correctValue = correctAnswers[field];
+    if (!correctValue) return "windows-input";
+    const isFieldCorrect =
+      String(inputValue)?.toLowerCase().trim() ===
+      String(correctValue)?.toLowerCase().trim();
+    return `windows-input ${isFieldCorrect ? "input-correct" : "input-incorrect"}`;
+  };
+
+  return (
+    <div className="windows-gui-container">
+      <div className="windows-dialog">
+        <div className="dialog-title-bar">
+          <span className="dialog-title">폴더 공유 설정</span>
+          <div className="title-bar-buttons">
+            <span className="title-button">_</span>
+            <span className="title-button">□</span>
+            <span className="title-button">✕</span>
+          </div>
+        </div>
+
+        <div className="dialog-content">
+          <div className="dialog-section">
+            <h4 className="section-title">공유 설정</h4>
+
+            <div className="input-group">
+              <label className="input-label">폴더 경로:</label>
+              <input
+                type="text"
+                className={getInputClass("folderPath")}
+                value={inputs.folderPath || ""}
+                onChange={(e) => handleChange("folderPath", e.target.value)}
+                disabled={showResult}
+              />
+            </div>
+
+            <div className="input-group">
+              <label className="input-label">공유 이름:</label>
+              <input
+                type="text"
+                className={getInputClass("shareName")}
+                value={inputs.shareName || ""}
+                onChange={(e) => handleChange("shareName", e.target.value)}
+                disabled={showResult}
+              />
+            </div>
+
+            <div className="input-group">
+              <label className="input-label">공유 권한:</label>
+              <input
+                type="text"
+                className={getInputClass("sharePermission")}
+                value={inputs.sharePermission || ""}
+                onChange={(e) =>
+                  handleChange("sharePermission", e.target.value)
+                }
+                disabled={showResult}
+              />
+            </div>
+
+            <div className="input-group">
+              <label className="input-label">NTFS 권한:</label>
+              <input
+                type="text"
+                className={getInputClass("ntfsPermission")}
+                value={inputs.ntfsPermission || ""}
+                onChange={(e) => handleChange("ntfsPermission", e.target.value)}
+                disabled={showResult}
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// 디스크 관리 GUI 컴포넌트
+export function DiskSettingsGUI({
+  userInputs,
+  setUserInputs,
+  correctAnswers,
+  showResult,
+}: {
+  userInputs: Partial<AllAnswerTypes>;
+  setUserInputs: (inputs: Partial<AllAnswerTypes>) => void;
+  correctAnswers: DiskAnswers;
+  showResult: boolean;
+}) {
+  const inputs = userInputs as Partial<DiskAnswers>;
+
+  const handleChange = (field: keyof DiskAnswers, value: string) => {
+    setUserInputs({ ...userInputs, [field]: value });
+  };
+
+  const getInputClass = (field: keyof DiskAnswers) => {
+    if (!showResult) return "windows-input";
+    const inputValue = inputs[field];
+    const correctValue = correctAnswers[field];
+    if (!correctValue) return "windows-input";
+    const isFieldCorrect =
+      String(inputValue)?.toLowerCase().trim() ===
+      String(correctValue)?.toLowerCase().trim();
+    return `windows-input ${isFieldCorrect ? "input-correct" : "input-incorrect"}`;
+  };
+
+  return (
+    <div className="windows-gui-container">
+      <div className="windows-dialog">
+        <div className="dialog-title-bar">
+          <span className="dialog-title">새 미러 볼륨</span>
+          <div className="title-bar-buttons">
+            <span className="title-button">_</span>
+            <span className="title-button">□</span>
+            <span className="title-button">✕</span>
+          </div>
+        </div>
+
+        <div className="dialog-content">
+          <div className="dialog-section">
+            <h4 className="section-title">볼륨 설정</h4>
+
+            <div className="input-group">
+              <label className="input-label">볼륨 크기:</label>
+              <input
+                type="text"
+                className={getInputClass("volumeSize")}
+                value={inputs.volumeSize || ""}
+                onChange={(e) => handleChange("volumeSize", e.target.value)}
+                disabled={showResult}
+              />
+            </div>
+
+            <div className="input-group">
+              <label className="input-label">드라이브 문자:</label>
+              <input
+                type="text"
+                className={getInputClass("driveLetter")}
+                value={inputs.driveLetter || ""}
+                onChange={(e) => handleChange("driveLetter", e.target.value)}
+                disabled={showResult}
+                maxLength={1}
+              />
+            </div>
+
+            <div className="input-group">
+              <label className="input-label">파일 시스템:</label>
+              <select
+                className={getInputClass("fileSystem")}
+                value={inputs.fileSystem || ""}
+                onChange={(e) => handleChange("fileSystem", e.target.value)}
+                disabled={showResult}
+              >
+                <option value="">선택하세요</option>
+                <option value="NTFS">NTFS</option>
+                <option value="FAT32">FAT32</option>
+                <option value="exFAT">exFAT</option>
+              </select>
+            </div>
+
+            {correctAnswers.raidType && (
+              <div className="input-group">
+                <label className="input-label">RAID 유형:</label>
+                <input
+                  type="text"
+                  className="windows-input"
+                  value={correctAnswers.raidType}
+                  disabled
+                  style={{ backgroundColor: "#e8e8e8" }}
+                />
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// IIS 설정 GUI 컴포넌트
+export function IISSettingsGUI({
+  userInputs,
+  setUserInputs,
+  correctAnswers,
+  showResult,
+}: {
+  userInputs: Partial<AllAnswerTypes>;
+  setUserInputs: (inputs: Partial<AllAnswerTypes>) => void;
+  correctAnswers: IISAnswers;
+  showResult: boolean;
+}) {
+  const inputs = userInputs as Partial<IISAnswers>;
+
+  const handleChange = (field: keyof IISAnswers, value: string) => {
+    setUserInputs({ ...userInputs, [field]: value });
+  };
+
+  const getInputClass = (field: keyof IISAnswers) => {
+    if (!showResult) return "windows-input";
+    const inputValue = inputs[field];
+    const correctValue = correctAnswers[field];
+    if (!correctValue) return "windows-input";
+    const isFieldCorrect =
+      String(inputValue)?.toLowerCase().trim() ===
+      String(correctValue)?.toLowerCase().trim();
+    return `windows-input ${isFieldCorrect ? "input-correct" : "input-incorrect"}`;
+  };
+
+  return (
+    <div className="windows-gui-container">
+      <div className="windows-dialog">
+        <div className="dialog-title-bar">
+          <span className="dialog-title">IIS 관리자</span>
+          <div className="title-bar-buttons">
+            <span className="title-button">_</span>
+            <span className="title-button">□</span>
+            <span className="title-button">✕</span>
+          </div>
+        </div>
+
+        <div className="dialog-content">
+          <div className="dialog-section">
+            <h4 className="section-title">사이트 설정</h4>
+
+            <div className="input-group">
+              <label className="input-label">사이트 이름:</label>
+              <input
+                type="text"
+                className={getInputClass("siteName")}
+                value={inputs.siteName || ""}
+                onChange={(e) => handleChange("siteName", e.target.value)}
+                disabled={showResult}
+              />
+            </div>
+
+            {correctAnswers.defaultDoc1 && (
+              <>
+                <div className="input-group">
+                  <label className="input-label">기본 문서 1순위:</label>
+                  <input
+                    type="text"
+                    className={getInputClass("defaultDoc1")}
+                    value={inputs.defaultDoc1 || ""}
+                    onChange={(e) =>
+                      handleChange("defaultDoc1", e.target.value)
+                    }
+                    disabled={showResult}
+                  />
+                </div>
+
+                <div className="input-group">
+                  <label className="input-label">기본 문서 2순위:</label>
+                  <input
+                    type="text"
+                    className={getInputClass("defaultDoc2")}
+                    value={inputs.defaultDoc2 || ""}
+                    onChange={(e) =>
+                      handleChange("defaultDoc2", e.target.value)
+                    }
+                    disabled={showResult}
+                  />
+                </div>
+
+                <div className="input-group">
+                  <label className="input-label">기본 문서 3순위:</label>
+                  <input
+                    type="text"
+                    className={getInputClass("defaultDoc3")}
+                    value={inputs.defaultDoc3 || ""}
+                    onChange={(e) =>
+                      handleChange("defaultDoc3", e.target.value)
+                    }
+                    disabled={showResult}
+                  />
+                </div>
+              </>
+            )}
+
+            {correctAnswers.directoryBrowsing && (
+              <div className="input-group">
+                <label className="input-label">디렉터리 검색:</label>
+                <select
+                  className={getInputClass("directoryBrowsing")}
+                  value={inputs.directoryBrowsing || ""}
+                  onChange={(e) =>
+                    handleChange("directoryBrowsing", e.target.value)
+                  }
+                  disabled={showResult}
+                >
+                  <option value="">선택하세요</option>
+                  <option value="사용">사용</option>
+                  <option value="사용안함">사용안함</option>
                 </select>
               </div>
             )}

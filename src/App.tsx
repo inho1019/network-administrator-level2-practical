@@ -15,6 +15,10 @@ import type {
   WebsiteAnswers,
   UserAnswers,
   ServiceAnswers,
+  FirewallAnswers,
+  ShareAnswers,
+  DiskAnswers,
+  IISAnswers,
 } from "./types";
 import {
   windowsProblems,
@@ -44,6 +48,10 @@ import {
   WebsiteSettingsGUI,
   UserSettingsGUI,
   ServiceSettingsGUI,
+  FirewallSettingsGUI,
+  ShareSettingsGUI,
+  DiskSettingsGUI,
+  IISSettingsGUI,
 } from "./components/windows";
 
 // 윈도우 설정 퀴즈 컴포넌트
@@ -319,6 +327,42 @@ function WindowsSettingsQuiz({ onBack }: { onBack: () => void }) {
               userInputs={userInputs}
               setUserInputs={setUserInputs}
               correctAnswers={currentProblem.correctAnswers as ServiceAnswers}
+              showResult={showResult}
+            />
+          )}
+
+          {currentProblem.type === "firewall" && (
+            <FirewallSettingsGUI
+              userInputs={userInputs}
+              setUserInputs={setUserInputs}
+              correctAnswers={currentProblem.correctAnswers as FirewallAnswers}
+              showResult={showResult}
+            />
+          )}
+
+          {currentProblem.type === "share" && (
+            <ShareSettingsGUI
+              userInputs={userInputs}
+              setUserInputs={setUserInputs}
+              correctAnswers={currentProblem.correctAnswers as ShareAnswers}
+              showResult={showResult}
+            />
+          )}
+
+          {currentProblem.type === "disk" && (
+            <DiskSettingsGUI
+              userInputs={userInputs}
+              setUserInputs={setUserInputs}
+              correctAnswers={currentProblem.correctAnswers as DiskAnswers}
+              showResult={showResult}
+            />
+          )}
+
+          {currentProblem.type === "iis" && (
+            <IISSettingsGUI
+              userInputs={userInputs}
+              setUserInputs={setUserInputs}
+              correctAnswers={currentProblem.correctAnswers as IISAnswers}
               showResult={showResult}
             />
           )}
@@ -1476,6 +1520,42 @@ const WindowsProblemInExam = ({
             userInputs={userInputs}
             setUserInputs={setUserInputs}
             correctAnswers={problem.correctAnswers as ServiceAnswers}
+            showResult={showResult}
+          />
+        );
+      case "firewall":
+        return (
+          <FirewallSettingsGUI
+            userInputs={userInputs}
+            setUserInputs={setUserInputs}
+            correctAnswers={problem.correctAnswers as FirewallAnswers}
+            showResult={showResult}
+          />
+        );
+      case "share":
+        return (
+          <ShareSettingsGUI
+            userInputs={userInputs}
+            setUserInputs={setUserInputs}
+            correctAnswers={problem.correctAnswers as ShareAnswers}
+            showResult={showResult}
+          />
+        );
+      case "disk":
+        return (
+          <DiskSettingsGUI
+            userInputs={userInputs}
+            setUserInputs={setUserInputs}
+            correctAnswers={problem.correctAnswers as DiskAnswers}
+            showResult={showResult}
+          />
+        );
+      case "iis":
+        return (
+          <IISSettingsGUI
+            userInputs={userInputs}
+            setUserInputs={setUserInputs}
+            correctAnswers={problem.correctAnswers as IISAnswers}
             showResult={showResult}
           />
         );

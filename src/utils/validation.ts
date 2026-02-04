@@ -224,17 +224,36 @@ export const checkRouterCommands = (
 
 /**
  * 단답형 문제의 답안을 검증합니다.
+ * 배열 정답의 경우 순서와 관계없이 모든 답안이 일치해야 합니다.
  */
 export const checkShortAnswer = (
-  userAnswer: string,
-  correctAnswer: string,
+  userAnswer: string | string[],
+  correctAnswer: string | string[],
 ): boolean => {
-  const normalizedUser = userAnswer.toLowerCase().replace(/\s+/g, "").trim();
-  const normalizedCorrect = correctAnswer
-    .toLowerCase()
-    .replace(/\s+/g, "")
-    .trim();
-  return normalizedUser === normalizedCorrect;
+  const normalize = (str: string) =>
+    str.toLowerCase().replace(/\s+/g, "").trim();
+
+  // 단일 정답인 경우
+  if (typeof correctAnswer === "string" && typeof userAnswer === "string") {
+    return normalize(userAnswer) === normalize(correctAnswer);
+  }
+
+  // 배열 정답인 경우 - 순서 무관하게 비교
+  if (Array.isArray(correctAnswer) && Array.isArray(userAnswer)) {
+    if (userAnswer.length !== correctAnswer.length) return false;
+
+    // 정답 배열과 사용자 답안 배열을 정규화
+    const normalizedCorrect = correctAnswer.map(normalize);
+    const normalizedUser = userAnswer.map(normalize);
+
+    // 순서 무관하게 모든 답이 포함되어 있는지 확인
+    return (
+      normalizedUser.every((answer) => normalizedCorrect.includes(answer)) &&
+      normalizedCorrect.every((answer) => normalizedUser.includes(answer))
+    );
+  }
+
+  return false;
 };
 
 /**

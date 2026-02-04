@@ -11,10 +11,14 @@ export type PageType =
   | "exam-info";
 
 // Quiz Question Types
+export type QuestionType = "short-answer" | "multiple-choice";
+
 export interface Question {
   question: string;
-  answer: string;
+  answer: string | string[];
   description: string;
+  type: QuestionType;
+  options?: string[]; // 선택형 문제의 보기 목록
 }
 
 // Windows Settings Types

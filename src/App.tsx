@@ -982,7 +982,7 @@ const MockExam = ({ onBack }: { onBack: () => void }) => {
     return isCorrect;
   };
 
-  const handleShortAnswerSubmit = (answer: string) => {
+  const handleShortAnswerSubmit = (answer: string | string[]) => {
     if (currentProblem.type !== "shortAnswer") return false;
 
     const isCorrect = checkShortAnswer(answer, currentProblem.problem.answer);
@@ -1074,7 +1074,12 @@ const MockExam = ({ onBack }: { onBack: () => void }) => {
                               ❓ 문제: {problem.problem.question}
                             </p>
                             <p className="correct-answer">
-                              ✅ 정답: <span>{problem.problem.answer}</span>
+                              ✅ 정답:{" "}
+                              <span>
+                                {Array.isArray(problem.problem.answer)
+                                  ? problem.problem.answer.join(", ")
+                                  : problem.problem.answer}
+                              </span>
                             </p>
                             <p className="answer-description">
                               💡 해설: {problem.problem.description}
@@ -1137,21 +1142,10 @@ const MockExam = ({ onBack }: { onBack: () => void }) => {
             <button className="back-button-small" onClick={onBack}>
               ← 나가기
             </button>
-            <button
-              style={{ marginLeft: 10, paddingLeft: 10, paddingRight: 10 }}
-              className="back-button-small"
-              onClick={goToNextProblem}
-            >
-              →
-            </button>
           </div>
           <h1 className="mock-exam-title">📝 모의고사</h1>
-          <div
-            style={{ width: 140, display: "flex", justifyContent: "flex-end" }}
-          >
-            <div className="problem-counter">
-              {currentProblem.questionNumber} / 18
-            </div>
+          <div className="problem-counter">
+            {currentProblem.questionNumber} / 18
           </div>
         </div>
 
@@ -1588,7 +1582,7 @@ const WindowsProblemInExam = ({
   );
 };
 
-// 모의고사용 단답형 문제 컴포넌트
+// 모의고사용 단답형, 선택형 문제 컴포넌트
 const ShortAnswerProblemInExam = ({
   problem,
   onSubmit,
@@ -1597,38 +1591,133 @@ const ShortAnswerProblemInExam = ({
   setShowResult,
 }: {
   problem: Question;
-  onSubmit: (answer: string) => boolean;
+  onSubmit: (answer: string | string[]) => boolean;
   onNext: () => void;
   showResult: boolean;
   setShowResult: (show: boolean) => void;
 }) => {
-  const [answer, setAnswer] = useState("");
+  const isArrayAnswer = Array.isArray(problem.answer);
+  const isMultipleChoice =
+    problem.type === "multiple-choice" && problem.options;
+
+  const [answer, setAnswer] = useState<string | string[]>(
+    isArrayAnswer ? Array(problem.answer.length).fill("") : "",
+  );
+  const [selectedOptions, setSelectedOptions] = useState<string[]>([]);
   const [isCorrect, setIsCorrect] = useState(false);
 
   const handleSubmit = () => {
-    const result = onSubmit(answer);
+    let result: boolean;
+    if (isMultipleChoice) {
+      const answerToCheck = isArrayAnswer
+        ? selectedOptions
+        : selectedOptions[0];
+      result = onSubmit(answerToCheck);
+    } else {
+      result = onSubmit(answer);
+    }
     setIsCorrect(result);
     setShowResult(true);
   };
 
+  const handleArrayChange = (index: number, value: string) => {
+    const newAnswers = [...(answer as string[])];
+    newAnswers[index] = value;
+    setAnswer(newAnswers);
+  };
+
+  const handleOptionClick = (option: string) => {
+    if (showResult) return;
+
+    if (isArrayAnswer) {
+      // 복수 선택
+      setSelectedOptions((prev) =>
+        prev.includes(option)
+          ? prev.filter((o) => o !== option)
+          : [...prev, option],
+      );
+    } else {
+      // 단일 선택
+      setSelectedOptions([option]);
+    }
+  };
+
+  const formatAnswer = (ans: string | string[]) => {
+    if (Array.isArray(ans)) {
+      return ans.join(", ");
+    }
+    return ans;
+  };
+
   return (
     <div className="exam-problem-content">
-      <h2 className="exam-problem-title">단답형</h2>
+      <h2 className="exam-problem-title">
+        {isMultipleChoice ? "선택형" : "단답형"}
+      </h2>
       <p className="exam-problem-question">{problem.question}</p>
 
-      <input
-        type="text"
-        value={answer}
-        onChange={(e) => setAnswer(e.target.value)}
-        className="exam-answer-input"
-        placeholder="답을 입력하세요"
-        disabled={showResult}
-        onKeyPress={(e) => {
-          if (e.key === "Enter" && !showResult) {
-            handleSubmit();
-          }
-        }}
-      />
+      {isMultipleChoice && problem.options ? (
+        // 선택형 문제
+        <div className="exam-options-container">
+          {isArrayAnswer && (
+            <p className="exam-options-hint">
+              💡 {(problem.answer as string[]).length}개를 선택하세요
+            </p>
+          )}
+          {problem.options.map((option, index) => {
+            const isSelected = selectedOptions.includes(option);
+            return (
+              <button
+                key={index}
+                className={`exam-option-button ${isSelected ? "selected" : ""}`}
+                onClick={() => handleOptionClick(option)}
+                disabled={showResult}
+              >
+                <span className="exam-option-number">{index + 1}</span>
+                <span className="exam-option-text">{option}</span>
+                {isSelected && <span className="exam-option-check">✓</span>}
+              </button>
+            );
+          })}
+        </div>
+      ) : isArrayAnswer ? (
+        // 배열 단답형
+        <div className="multi-answer-inputs exam-multi-answer">
+          {(problem.answer as string[]).map((_, index) => (
+            <div key={index} className="multi-answer-row">
+              <span className="answer-label">답안 {index + 1}:</span>
+              <input
+                type="text"
+                value={(answer as string[])[index] || ""}
+                onChange={(e) => handleArrayChange(index, e.target.value)}
+                className="exam-answer-input"
+                placeholder={`답 ${index + 1}을 입력하세요`}
+                disabled={showResult}
+                onKeyPress={(e) => {
+                  if (e.key === "Enter" && !showResult) {
+                    handleSubmit();
+                  }
+                }}
+              />
+            </div>
+          ))}
+        </div>
+      ) : (
+        // 단일 단답형
+        <input
+          type="text"
+          value={answer as string}
+          onChange={(e) => setAnswer(e.target.value)}
+          className="exam-answer-input"
+          placeholder="답을 입력하세요"
+          disabled={showResult}
+          onKeyPress={(e) => {
+            if (e.key === "Enter" && !showResult) {
+              handleSubmit();
+            }
+          }}
+        />
+      )}
 
       {!showResult ? (
         <button onClick={handleSubmit} className="submit-exam-button">
@@ -1639,7 +1728,7 @@ const ShortAnswerProblemInExam = ({
           <p>
             {isCorrect
               ? "✅ 정답입니다!"
-              : `❌ 오답입니다. 정답: ${problem.answer}`}
+              : `❌ 오답입니다. 정답: ${formatAnswer(problem.answer)}`}
           </p>
           <button onClick={onNext} className="next-exam-button">
             다음 문제
@@ -1937,9 +2026,21 @@ function App() {
   const [quizMode, setQuizMode] = useState<"all" | "random">("all");
   const [selectedQuestions, setSelectedQuestions] = useState<Question[]>([]);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
-  const [userAnswers, setUserAnswers] = useState<string[]>([]);
-  const [currentAnswer, setCurrentAnswer] = useState("");
+  const [userAnswers, setUserAnswers] = useState<(string | string[])[]>([]);
+  const [currentAnswer, setCurrentAnswer] = useState<string | string[]>("");
+  const [selectedOptions, setSelectedOptions] = useState<string[]>([]);
   const [score, setScore] = useState(0);
+
+  // 현재 문제의 정답 개수 가져오기
+  const getAnswerCount = (question: Question) => {
+    return Array.isArray(question.answer) ? question.answer.length : 1;
+  };
+
+  // 현재 답변 초기화
+  const initCurrentAnswer = (question: Question) => {
+    const count = getAnswerCount(question);
+    return count > 1 ? Array(count).fill("") : "";
+  };
 
   const startQuiz = (mode: "all" | "random") => {
     setQuizMode(mode);
@@ -1948,21 +2049,67 @@ function App() {
     setSelectedQuestions(questions);
     setCurrentQuestionIndex(0);
     setUserAnswers([]);
-    setCurrentAnswer("");
+    setSelectedOptions([]);
+    setCurrentAnswer(
+      questions.length > 0 ? initCurrentAnswer(questions[0]) : "",
+    );
     setScore(0);
     setPage("quiz");
   };
 
   const handleSubmitAnswer = () => {
-    if (!currentAnswer.trim()) {
-      alert("답변을 입력해주세요!");
+    const currentQuestion = selectedQuestions[currentQuestionIndex];
+
+    // 선택형 문제 처리
+    if (currentQuestion.type === "multiple-choice" && currentQuestion.options) {
+      if (selectedOptions.length === 0) {
+        alert("답변을 선택해주세요!");
+        return;
+      }
+
+      const answerToCheck = Array.isArray(currentQuestion.answer)
+        ? selectedOptions
+        : selectedOptions[0];
+
+      const isCorrect = checkShortAnswer(answerToCheck, currentQuestion.answer);
+      const newUserAnswers = [...userAnswers, answerToCheck];
+      setUserAnswers(newUserAnswers);
+
+      if (isCorrect) {
+        const pointsPerQuestion =
+          quizMode === "all" ? Math.round(100 / selectedQuestions.length) : 20;
+        setScore(score + pointsPerQuestion);
+      }
+
+      if (currentQuestionIndex < selectedQuestions.length - 1) {
+        const nextQuestion = selectedQuestions[currentQuestionIndex + 1];
+        setCurrentQuestionIndex(currentQuestionIndex + 1);
+        setSelectedOptions([]);
+        setCurrentAnswer(initCurrentAnswer(nextQuestion));
+      } else {
+        setPage("result");
+      }
       return;
     }
 
-    const isCorrect = checkShortAnswer(
-      currentAnswer,
-      selectedQuestions[currentQuestionIndex].answer,
-    );
+    // 단답형 문제 처리
+    const answerCount = getAnswerCount(currentQuestion);
+
+    // 답변 검증
+    if (answerCount === 1) {
+      if (!(currentAnswer as string).trim()) {
+        alert("답변을 입력해주세요!");
+        return;
+      }
+    } else {
+      const answers = currentAnswer as string[];
+      if (answers.some((a) => !a.trim())) {
+        alert("모든 답변을 입력해주세요!");
+        return;
+      }
+    }
+
+    const isCorrect = checkShortAnswer(currentAnswer, currentQuestion.answer);
     const newUserAnswers = [...userAnswers, currentAnswer];
     setUserAnswers(newUserAnswers);
 
@@ -1973,8 +2120,10 @@ function App() {
     }
 
     if (currentQuestionIndex < selectedQuestions.length - 1) {
+      const nextQuestion = selectedQuestions[currentQuestionIndex + 1];
       setCurrentQuestionIndex(currentQuestionIndex + 1);
-      setCurrentAnswer("");
+      setSelectedOptions([]);
+      setCurrentAnswer(initCurrentAnswer(nextQuestion));
     } else {
       setPage("result");
     }
@@ -1983,6 +2132,26 @@ function App() {
   const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {
       handleSubmitAnswer();
+    }
+  };
+
+  const handleArrayAnswerChange = (index: number, value: string) => {
+    const newAnswers = [...(currentAnswer as string[])];
+    newAnswers[index] = value;
+    setCurrentAnswer(newAnswers);
+  };
+
+  const handleOptionClick = (option: string, isMultiple: boolean) => {
+    if (isMultiple) {
+      // 복수 선택
+      setSelectedOptions((prev) =>
+        prev.includes(option)
+          ? prev.filter((o) => o !== option)
+          : [...prev, option],
+      );
+    } else {
+      // 단일 선택
+      setSelectedOptions([option]);
     }
   };
 
@@ -2039,7 +2208,7 @@ function App() {
 
             <button className="mode-button all" onClick={() => setPage("menu")}>
               <div className="mode-icon">✏️</div>
-              <h3>단답형 문제</h3>
+              <h3>단답형, 선택형 문제</h3>
               <p>명령어 및 기술 퀴즈</p>
             </button>
 
@@ -2089,12 +2258,12 @@ function App() {
     );
   }
 
-  // 단답형 문제 메뉴
+  // 단답형, 선택형 문제 메뉴
   if (page === "menu") {
     return (
       <div className="container">
         <div className="start-page">
-          <h1 className="title">✏️ 단답형 문제</h1>
+          <h1 className="title">✏️ 단답형, 선택형 문제</h1>
           <p className="subtitle">명령어 및 기술 퀴즈</p>
 
           <div className="mode-selection">
@@ -2146,7 +2315,7 @@ function App() {
             >
               ← 뒤로
             </button>
-            <h1 className="quiz-title">✏️ 단답형 문제</h1>
+            <h1 className="quiz-title">✏️ 단답형, 선택형 문제</h1>
             <div className="problem-counter">
               {currentQuestionIndex + 1} / {selectedQuestions.length}
             </div>
@@ -2159,23 +2328,67 @@ function App() {
             ></div>
           </div>
 
-          <div className="question-info">
-            <span className="current-score">현재 점수: {score}점</span>
-          </div>
-
           <div className="question-card">
             <h2 className="question-text">{currentQuestion.question}</h2>
 
             <div className="answer-input-container">
-              <input
-                type="text"
-                className="answer-input"
-                placeholder="답변을 입력하세요..."
-                value={currentAnswer}
-                onChange={(e) => setCurrentAnswer(e.target.value)}
-                onKeyPress={handleKeyPress}
-                autoFocus
-              />
+              {currentQuestion.type === "multiple-choice" &&
+              currentQuestion.options ? (
+                // 선택형 문제
+                <div className="options-container">
+                  {Array.isArray(currentQuestion.answer) && (
+                    <p className="options-hint">
+                      💡 {currentQuestion.answer.length}개를 선택하세요
+                    </p>
+                  )}
+                  {currentQuestion.options.map((option, index) => {
+                    const isSelected = selectedOptions.includes(option);
+                    const isMultiple = Array.isArray(currentQuestion.answer);
+                    return (
+                      <button
+                        key={index}
+                        className={`option-button ${isSelected ? "selected" : ""}`}
+                        onClick={() => handleOptionClick(option, isMultiple)}
+                      >
+                        <span className="option-number">{index + 1}</span>
+                        <span className="option-text">{option}</span>
+                        {isSelected && <span className="option-check">✓</span>}
+                      </button>
+                    );
+                  })}
+                </div>
+              ) : Array.isArray(currentQuestion.answer) ? (
+                // 배열 정답인 경우 여러 개의 input (단답형)
+                <div className="multi-answer-inputs">
+                  {currentQuestion.answer.map((_, index) => (
+                    <div key={index} className="multi-answer-row">
+                      <span className="answer-label">답안 {index + 1}:</span>
+                      <input
+                        type="text"
+                        className="answer-input"
+                        placeholder={`답변 ${index + 1}을 입력하세요...`}
+                        value={(currentAnswer as string[])[index] || ""}
+                        onChange={(e) =>
+                          handleArrayAnswerChange(index, e.target.value)
+                        }
+                        onKeyPress={handleKeyPress}
+                        autoFocus={index === 0}
+                      />
+                    </div>
+                  ))}
+                </div>
+              ) : (
+                // 단일 정답인 경우 (단답형)
+                <input
+                  type="text"
+                  className="answer-input"
+                  placeholder="답변을 입력하세요..."
+                  value={currentAnswer as string}
+                  onChange={(e) => setCurrentAnswer(e.target.value)}
+                  onKeyPress={handleKeyPress}
+                  autoFocus
+                />
+              )}
               <button className="submit-button" onClick={handleSubmitAnswer}>
                 {currentQuestionIndex < selectedQuestions.length - 1
                   ? "다음 문제"
@@ -2225,8 +2438,16 @@ function App() {
           <div className="review-section">
             <h2 className="review-title">📝 문제 복습</h2>
             {selectedQuestions.map((q, index) => {
-              const userAnswer = userAnswers[index] || "";
+              const userAnswer =
+                userAnswers[index] || (Array.isArray(q.answer) ? [] : "");
               const isCorrect = checkShortAnswer(userAnswer, q.answer);
+
+              const formatAnswer = (ans: string | string[]) => {
+                if (Array.isArray(ans)) {
+                  return ans.join(", ");
+                }
+                return ans;
+              };
 
               return (
                 <div
@@ -2245,11 +2466,11 @@ function App() {
                   <div className="review-answers">
                     {!isCorrect && userAnswer && (
                       <p className="user-answer">
-                        내 답변: <span>{userAnswer}</span>
+                        내 답변: <span>{formatAnswer(userAnswer)}</span>
                       </p>
                     )}
                     <p className="correct-answer">
-                      정답: <span>{q.answer}</span>
+                      정답: <span>{formatAnswer(q.answer)}</span>
                     </p>
                     <p className="answer-description">{q.description}</p>
                   </div>

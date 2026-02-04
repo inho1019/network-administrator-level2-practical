@@ -4,6 +4,7 @@ import type {
   DHCPAnswers,
   FTPAnswers,
   DNSAnswers,
+  DNSReverseAnswers,
   SecurityAnswers,
   WebsiteAnswers,
   UserAnswers,
@@ -475,6 +476,104 @@ export function DNSSettingsGUI({
               )}
             </div>
           )}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// DNS 역방향 조회 영역 GUI 컴포넌트
+export function DNSReverseSettingsGUI({
+  userInputs,
+  setUserInputs,
+  correctAnswers,
+  showResult,
+}: {
+  userInputs: Partial<AllAnswerTypes>;
+  setUserInputs: (inputs: Partial<AllAnswerTypes>) => void;
+  correctAnswers: DNSReverseAnswers;
+  showResult: boolean;
+}) {
+  const inputs = userInputs as Partial<DNSReverseAnswers>;
+
+  const handleChange = (field: keyof DNSReverseAnswers, value: string) => {
+    setUserInputs({ ...userInputs, [field]: value });
+  };
+
+  const getInputClass = (field: keyof DNSReverseAnswers) => {
+    if (!showResult) return "windows-input";
+    const inputValue = inputs[field];
+    const correctValue = correctAnswers[field];
+    if (!correctValue) return "windows-input";
+    const isFieldCorrect =
+      inputValue?.toLowerCase().trim() === correctValue?.toLowerCase().trim();
+    return `windows-input ${isFieldCorrect ? "input-correct" : "input-incorrect"}`;
+  };
+
+  return (
+    <div className="windows-gui-container">
+      <div className="windows-dialog">
+        <div className="dialog-title-bar">
+          <span className="dialog-title">역방향 조회 영역 마법사</span>
+          <div className="title-bar-buttons">
+            <span className="title-button">_</span>
+            <span className="title-button">□</span>
+            <span className="title-button">✕</span>
+          </div>
+        </div>
+
+        <div className="dialog-content">
+          <div className="dialog-section">
+            <h4 className="section-title">역방향 조회 영역</h4>
+
+            <div className="input-group">
+              <label className="input-label">네트워크 ID:</label>
+              <input
+                type="text"
+                className={getInputClass("networkID")}
+                value={inputs.networkID || ""}
+                onChange={(e) => handleChange("networkID", e.target.value)}
+                disabled={showResult}
+              />
+            </div>
+
+            <div className="input-group">
+              <label className="input-label">영역 유형:</label>
+              <input
+                type="text"
+                className={getInputClass("zoneType")}
+                value={inputs.zoneType || ""}
+                onChange={(e) => handleChange("zoneType", e.target.value)}
+                disabled={showResult}
+              />
+            </div>
+          </div>
+
+          <div className="dialog-section">
+            <h4 className="section-title">PTR 레코드</h4>
+
+            <div className="input-group">
+              <label className="input-label">IP 주소:</label>
+              <input
+                type="text"
+                className={getInputClass("ptrIP")}
+                value={inputs.ptrIP || ""}
+                onChange={(e) => handleChange("ptrIP", e.target.value)}
+                disabled={showResult}
+              />
+            </div>
+
+            <div className="input-group">
+              <label className="input-label">호스트 이름:</label>
+              <input
+                type="text"
+                className={getInputClass("ptrHostName")}
+                value={inputs.ptrHostName || ""}
+                onChange={(e) => handleChange("ptrHostName", e.target.value)}
+                disabled={showResult}
+              />
+            </div>
+          </div>
         </div>
       </div>
     </div>

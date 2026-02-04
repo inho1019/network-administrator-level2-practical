@@ -52,10 +52,13 @@ export interface DNSAnswers {
   zoneType: string;
   hostName?: string;
   hostIP?: string;
-  // 역방향 조회 영역용
-  networkID?: string;
-  ptrIP?: string;
-  ptrHostName?: string;
+}
+
+export interface DNSReverseAnswers {
+  networkID: string;
+  zoneType: string;
+  ptrIP: string;
+  ptrHostName: string;
 }
 
 export interface SecurityAnswers {
@@ -132,6 +135,7 @@ export type AllAnswerTypes =
   | DHCPAnswers
   | FTPAnswers
   | DNSAnswers
+  | DNSReverseAnswers
   | SecurityAnswers
   | WebsiteAnswers
   | UserAnswers
@@ -148,6 +152,7 @@ export interface WindowsSettingsProblem {
     | "dhcp"
     | "ftp"
     | "dns"
+    | "dns-reverse"
     | "security"
     | "website"
     | "user"

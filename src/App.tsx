@@ -11,6 +11,7 @@ import type {
   DHCPAnswers,
   FTPAnswers,
   DNSAnswers,
+  DNSReverseAnswers,
   SecurityAnswers,
   WebsiteAnswers,
   UserAnswers,
@@ -44,6 +45,7 @@ import {
   DHCPSettingsGUI,
   FTPSettingsGUI,
   DNSSettingsGUI,
+  DNSReverseSettingsGUI,
   SecuritySettingsGUI,
   WebsiteSettingsGUI,
   UserSettingsGUI,
@@ -291,6 +293,17 @@ function WindowsSettingsQuiz({ onBack }: { onBack: () => void }) {
               userInputs={userInputs}
               setUserInputs={setUserInputs}
               correctAnswers={currentProblem.correctAnswers as DNSAnswers}
+              showResult={showResult}
+            />
+          )}
+
+          {currentProblem.type === "dns-reverse" && (
+            <DNSReverseSettingsGUI
+              userInputs={userInputs}
+              setUserInputs={setUserInputs}
+              correctAnswers={
+                currentProblem.correctAnswers as DNSReverseAnswers
+              }
               showResult={showResult}
             />
           )}
@@ -1484,6 +1497,15 @@ const WindowsProblemInExam = ({
             userInputs={userInputs}
             setUserInputs={setUserInputs}
             correctAnswers={problem.correctAnswers as DNSAnswers}
+            showResult={showResult}
+          />
+        );
+      case "dns-reverse":
+        return (
+          <DNSReverseSettingsGUI
+            userInputs={userInputs}
+            setUserInputs={setUserInputs}
+            correctAnswers={problem.correctAnswers as DNSReverseAnswers}
             showResult={showResult}
           />
         );

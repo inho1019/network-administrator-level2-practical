@@ -3,6 +3,7 @@ export {
   DHCPSettingsGUI,
   FTPSettingsGUI,
   DNSSettingsGUI,
+  DNSReverseSettingsGUI,
   SecuritySettingsGUI,
   WebsiteSettingsGUI,
   UserSettingsGUI,

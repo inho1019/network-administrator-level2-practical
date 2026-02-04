@@ -290,7 +290,7 @@ export const windowsProblems: WindowsSettingsProblem[] = [
   },
   {
     id: 17,
-    type: "dns",
+    type: "dns-reverse",
     title: "#18 DNS 역방향 조회 영역 설정",
     description:
       "역방향 조회 영역을 설정하시오.\n네트워크 ID: 192.168.100\n영역 유형: 주 영역\nPTR 레코드 - IP: 192.168.100.10\nPTR 레코드 - 호스트 이름: www.test.com",

@@ -13,6 +13,8 @@ import type {
   DNSAnswers,
   DNSReverseAnswers,
   SecurityAnswers,
+  AccountLockoutAnswers,
+  PasswordPolicyAnswers,
   WebsiteAnswers,
   UserAnswers,
   ServiceAnswers,
@@ -47,6 +49,8 @@ import {
   DNSSettingsGUI,
   DNSReverseSettingsGUI,
   SecuritySettingsGUI,
+  AccountLockoutSettingsGUI,
+  PasswordPolicySettingsGUI,
   WebsiteSettingsGUI,
   UserSettingsGUI,
   ServiceSettingsGUI,
@@ -313,6 +317,28 @@ function WindowsSettingsQuiz({ onBack }: { onBack: () => void }) {
               userInputs={userInputs}
               setUserInputs={setUserInputs}
               correctAnswers={currentProblem.correctAnswers as SecurityAnswers}
+              showResult={showResult}
+            />
+          )}
+
+          {currentProblem.type === "account-lockout" && (
+            <AccountLockoutSettingsGUI
+              userInputs={userInputs}
+              setUserInputs={setUserInputs}
+              correctAnswers={
+                currentProblem.correctAnswers as AccountLockoutAnswers
+              }
+              showResult={showResult}
+            />
+          )}
+
+          {currentProblem.type === "password-policy" && (
+            <PasswordPolicySettingsGUI
+              userInputs={userInputs}
+              setUserInputs={setUserInputs}
+              correctAnswers={
+                currentProblem.correctAnswers as PasswordPolicyAnswers
+              }
               showResult={showResult}
             />
           )}
@@ -1515,6 +1541,24 @@ const WindowsProblemInExam = ({
             userInputs={userInputs}
             setUserInputs={setUserInputs}
             correctAnswers={problem.correctAnswers as SecurityAnswers}
+            showResult={showResult}
+          />
+        );
+      case "account-lockout":
+        return (
+          <AccountLockoutSettingsGUI
+            userInputs={userInputs}
+            setUserInputs={setUserInputs}
+            correctAnswers={problem.correctAnswers as AccountLockoutAnswers}
+            showResult={showResult}
+          />
+        );
+      case "password-policy":
+        return (
+          <PasswordPolicySettingsGUI
+            userInputs={userInputs}
+            setUserInputs={setUserInputs}
+            correctAnswers={problem.correctAnswers as PasswordPolicyAnswers}
             showResult={showResult}
           />
         );

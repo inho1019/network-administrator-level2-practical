@@ -422,7 +422,7 @@ export const windowsProblems: WindowsSettingsProblem[] = [
   },
   {
     id: 24,
-    type: "security",
+    type: "account-lockout",
     title: "#25 계정 잠금 정책 설정",
     description:
       "로컬 보안 정책에서 계정 잠금 정책을 설정하시오.\n\n계정 잠금 임계값: 3회\n계정 잠금 기간: 30분\n다음 시간 후 계정 잠금 수를 원래대로 설정: 30분",
@@ -435,7 +435,7 @@ export const windowsProblems: WindowsSettingsProblem[] = [
   },
   {
     id: 25,
-    type: "security",
+    type: "password-policy",
     title: "#26 암호 정책 설정",
     description:
       "로컬 보안 정책에서 암호 정책을 설정하시오.\n\n최소 암호 길이: 8자\n암호는 복잡성을 만족해야 함: 사용\n최대 암호 사용 기간: 90일\n최소 암호 사용 기간: 1일",

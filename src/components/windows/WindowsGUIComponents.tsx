@@ -6,6 +6,8 @@ import type {
   DNSAnswers,
   DNSReverseAnswers,
   SecurityAnswers,
+  AccountLockoutAnswers,
+  PasswordPolicyAnswers,
   WebsiteAnswers,
   UserAnswers,
   ServiceAnswers,
@@ -714,6 +716,196 @@ export function SecuritySettingsGUI({
               )}
             </div>
           )}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// 계정 잠금 정책 GUI 컴포넌트
+export function AccountLockoutSettingsGUI({
+  userInputs,
+  setUserInputs,
+  correctAnswers,
+  showResult,
+}: {
+  userInputs: Partial<AllAnswerTypes>;
+  setUserInputs: (inputs: Partial<AllAnswerTypes>) => void;
+  correctAnswers: AccountLockoutAnswers;
+  showResult: boolean;
+}) {
+  const inputs = userInputs as Partial<AccountLockoutAnswers>;
+
+  const handleChange = (field: keyof AccountLockoutAnswers, value: string) => {
+    setUserInputs({ ...userInputs, [field]: value });
+  };
+
+  const getInputClass = (field: keyof AccountLockoutAnswers) => {
+    if (!showResult) return "windows-input";
+    const inputValue = inputs[field];
+    const correctValue = correctAnswers[field];
+    if (!correctValue) return "windows-input";
+    const isFieldCorrect =
+      inputValue?.toLowerCase().trim() === correctValue?.toLowerCase().trim();
+    return `windows-input ${isFieldCorrect ? "input-correct" : "input-incorrect"}`;
+  };
+
+  return (
+    <div className="windows-gui-container">
+      <div className="windows-dialog">
+        <div className="dialog-title-bar">
+          <span className="dialog-title">계정 잠금 정책</span>
+          <div className="title-bar-buttons">
+            <span className="title-button">_</span>
+            <span className="title-button">□</span>
+            <span className="title-button">✕</span>
+          </div>
+        </div>
+
+        <div className="dialog-content">
+          <div className="dialog-section">
+            <h4 className="section-title">계정 잠금 정책</h4>
+
+            <div className="input-group">
+              <label className="input-label">계정 잠금 임계값 (회):</label>
+              <input
+                type="text"
+                className={getInputClass("lockoutThreshold")}
+                value={inputs.lockoutThreshold || ""}
+                onChange={(e) =>
+                  handleChange("lockoutThreshold", e.target.value)
+                }
+                disabled={showResult}
+              />
+            </div>
+
+            <div className="input-group">
+              <label className="input-label">계정 잠금 기간 (분):</label>
+              <input
+                type="text"
+                className={getInputClass("lockoutDuration")}
+                value={inputs.lockoutDuration || ""}
+                onChange={(e) =>
+                  handleChange("lockoutDuration", e.target.value)
+                }
+                disabled={showResult}
+              />
+            </div>
+
+            <div className="input-group">
+              <label className="input-label">
+                다음 시간 후 원래대로 설정 (분):
+              </label>
+              <input
+                type="text"
+                className={getInputClass("resetCounter")}
+                value={inputs.resetCounter || ""}
+                onChange={(e) => handleChange("resetCounter", e.target.value)}
+                disabled={showResult}
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// 암호 정책 GUI 컴포넌트
+export function PasswordPolicySettingsGUI({
+  userInputs,
+  setUserInputs,
+  correctAnswers,
+  showResult,
+}: {
+  userInputs: Partial<AllAnswerTypes>;
+  setUserInputs: (inputs: Partial<AllAnswerTypes>) => void;
+  correctAnswers: PasswordPolicyAnswers;
+  showResult: boolean;
+}) {
+  const inputs = userInputs as Partial<PasswordPolicyAnswers>;
+
+  const handleChange = (field: keyof PasswordPolicyAnswers, value: string) => {
+    setUserInputs({ ...userInputs, [field]: value });
+  };
+
+  const getInputClass = (field: keyof PasswordPolicyAnswers) => {
+    if (!showResult) return "windows-input";
+    const inputValue = inputs[field];
+    const correctValue = correctAnswers[field];
+    if (!correctValue) return "windows-input";
+    const isFieldCorrect =
+      inputValue?.toLowerCase().trim() === correctValue?.toLowerCase().trim();
+    return `windows-input ${isFieldCorrect ? "input-correct" : "input-incorrect"}`;
+  };
+
+  return (
+    <div className="windows-gui-container">
+      <div className="windows-dialog">
+        <div className="dialog-title-bar">
+          <span className="dialog-title">암호 정책</span>
+          <div className="title-bar-buttons">
+            <span className="title-button">_</span>
+            <span className="title-button">□</span>
+            <span className="title-button">✕</span>
+          </div>
+        </div>
+
+        <div className="dialog-content">
+          <div className="dialog-section">
+            <h4 className="section-title">암호 정책</h4>
+
+            <div className="input-group">
+              <label className="input-label">최소 암호 길이 (자):</label>
+              <input
+                type="text"
+                className={getInputClass("minPasswordLength")}
+                value={inputs.minPasswordLength || ""}
+                onChange={(e) =>
+                  handleChange("minPasswordLength", e.target.value)
+                }
+                disabled={showResult}
+              />
+            </div>
+
+            <div className="input-group">
+              <label className="input-label">암호 복잡성 만족:</label>
+              <select
+                className={getInputClass("passwordComplexity")}
+                value={inputs.passwordComplexity || ""}
+                onChange={(e) =>
+                  handleChange("passwordComplexity", e.target.value)
+                }
+                disabled={showResult}
+              >
+                <option value="">선택하세요</option>
+                <option value="사용">사용</option>
+                <option value="사용안함">사용안함</option>
+              </select>
+            </div>
+
+            <div className="input-group">
+              <label className="input-label">최대 암호 사용 기간 (일):</label>
+              <input
+                type="text"
+                className={getInputClass("maxPasswordAge")}
+                value={inputs.maxPasswordAge || ""}
+                onChange={(e) => handleChange("maxPasswordAge", e.target.value)}
+                disabled={showResult}
+              />
+            </div>
+
+            <div className="input-group">
+              <label className="input-label">최소 암호 사용 기간 (일):</label>
+              <input
+                type="text"
+                className={getInputClass("minPasswordAge")}
+                value={inputs.minPasswordAge || ""}
+                onChange={(e) => handleChange("minPasswordAge", e.target.value)}
+                disabled={showResult}
+              />
+            </div>
+          </div>
         </div>
       </div>
     </div>

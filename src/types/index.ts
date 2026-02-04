@@ -67,12 +67,21 @@ export interface SecurityAnswers {
   maxPasswordAge?: string;
   lockoutAttempts?: string;
   lockoutDuration?: string;
-  // 계정 잠금 정책용
-  lockoutThreshold?: string;
-  resetCounter?: string;
-  // 암호 정책용
-  minPasswordLength?: string;
-  passwordComplexity?: string;
+}
+
+// 계정 잠금 정책
+export interface AccountLockoutAnswers {
+  lockoutThreshold: string;
+  lockoutDuration: string;
+  resetCounter: string;
+}
+
+// 암호 정책
+export interface PasswordPolicyAnswers {
+  minPasswordLength: string;
+  passwordComplexity: string;
+  maxPasswordAge: string;
+  minPasswordAge: string;
 }
 
 export interface WebsiteAnswers {
@@ -137,6 +146,8 @@ export type AllAnswerTypes =
   | DNSAnswers
   | DNSReverseAnswers
   | SecurityAnswers
+  | AccountLockoutAnswers
+  | PasswordPolicyAnswers
   | WebsiteAnswers
   | UserAnswers
   | ServiceAnswers
@@ -154,6 +165,8 @@ export interface WindowsSettingsProblem {
     | "dns"
     | "dns-reverse"
     | "security"
+    | "account-lockout"
+    | "password-policy"
     | "website"
     | "user"
     | "service"

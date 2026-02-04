@@ -5,6 +5,8 @@ export {
   DNSSettingsGUI,
   DNSReverseSettingsGUI,
   SecuritySettingsGUI,
+  AccountLockoutSettingsGUI,
+  PasswordPolicySettingsGUI,
   WebsiteSettingsGUI,
   UserSettingsGUI,
   ServiceSettingsGUI,

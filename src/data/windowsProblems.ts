@@ -288,4 +288,177 @@ export const windowsProblems: WindowsSettingsProblem[] = [
       serviceStatus: "중지",
     },
   },
+  {
+    id: 17,
+    type: "dns",
+    title: "#18 DNS 역방향 조회 영역 설정",
+    description:
+      "역방향 조회 영역을 설정하시오.\n네트워크 ID: 192.168.100\n영역 유형: 주 영역\nPTR 레코드 - IP: 192.168.100.10\nPTR 레코드 - 호스트 이름: www.test.com",
+    accessPath: [
+      "서버 관리자",
+      "도구",
+      "DNS",
+      "역방향 조회 영역 우클릭",
+      "새 영역",
+    ],
+    correctAnswers: {
+      networkID: "192.168.100",
+      zoneType: "주 영역",
+      ptrIP: "192.168.100.10",
+      ptrHostName: "www.test.com",
+    },
+  },
+  {
+    id: 18,
+    type: "firewall",
+    title: "#19 방화벽 인바운드 규칙 설정",
+    description:
+      "Windows 방화벽에서 HTTP(포트 80) 트래픽을 허용하는 인바운드 규칙을 생성하시오.\n\n규칙 이름: HTTP Allow\n포트: 80\n프로토콜: TCP\n작업: 연결 허용",
+    accessPath: [
+      "제어판",
+      "Windows Defender 방화벽",
+      "고급 설정",
+      "인바운드 규칙 우클릭",
+      "새 규칙",
+    ],
+    correctAnswers: {
+      ruleName: "HTTP Allow",
+      port: "80",
+      protocol: "TCP",
+      action: "연결 허용",
+    },
+  },
+  {
+    id: 19,
+    type: "firewall",
+    title: "#20 방화벽 아웃바운드 규칙 설정",
+    description:
+      "Windows 방화벽에서 FTP(포트 21) 트래픽을 차단하는 아웃바운드 규칙을 생성하시오.\n\n규칙 이름: FTP Block\n포트: 21\n프로토콜: TCP\n작업: 연결 차단",
+    accessPath: [
+      "제어판",
+      "Windows Defender 방화벽",
+      "고급 설정",
+      "아웃바운드 규칙 우클릭",
+      "새 규칙",
+    ],
+    correctAnswers: {
+      ruleName: "FTP Block",
+      port: "21",
+      protocol: "TCP",
+      action: "연결 차단",
+    },
+  },
+  {
+    id: 20,
+    type: "share",
+    title: "#21 공유 폴더 설정",
+    description:
+      "폴더를 공유하고 권한을 설정하시오.\n\n폴더 경로: C:\\SharedFolder\n공유 이름: SharedData\n공유 권한: Everyone - 읽기\nNTFS 권한: Administrators - 모든 권한",
+    accessPath: ["파일 탐색기", "폴더 우클릭", "속성", "공유 탭", "고급 공유"],
+    correctAnswers: {
+      folderPath: "C:\\SharedFolder",
+      shareName: "SharedData",
+      sharePermission: "Everyone - 읽기",
+      ntfsPermission: "Administrators - 모든 권한",
+    },
+  },
+  {
+    id: 21,
+    type: "disk",
+    title: "#22 디스크 미러링(RAID 1) 설정",
+    description:
+      "디스크 관리에서 두 개의 동적 디스크를 사용하여 미러 볼륨을 생성하시오.\n\n볼륨 크기: 10GB\n드라이브 문자: E\n파일 시스템: NTFS",
+    accessPath: [
+      "서버 관리자",
+      "도구",
+      "컴퓨터 관리",
+      "디스크 관리",
+      "디스크 우클릭",
+      "새 미러 볼륨",
+    ],
+    correctAnswers: {
+      volumeSize: "10GB",
+      driveLetter: "E",
+      fileSystem: "NTFS",
+      raidType: "미러(RAID 1)",
+    },
+  },
+  {
+    id: 22,
+    type: "iis",
+    title: "#23 IIS 기본 문서 설정",
+    description:
+      "IIS 웹 사이트의 기본 문서 우선순위를 설정하시오.\n\n사이트 이름: Default Web Site\n기본 문서 순서:\n1. index.html\n2. default.htm\n3. default.asp",
+    accessPath: [
+      "서버 관리자",
+      "도구",
+      "IIS(인터넷 정보 서비스) 관리자",
+      "사이트 선택",
+      "기본 문서",
+    ],
+    correctAnswers: {
+      siteName: "Default Web Site",
+      defaultDoc1: "index.html",
+      defaultDoc2: "default.htm",
+      defaultDoc3: "default.asp",
+    },
+  },
+  {
+    id: 23,
+    type: "iis",
+    title: "#24 IIS 디렉터리 검색 설정",
+    description:
+      "IIS에서 웹 사이트의 디렉터리 검색 기능을 활성화하시오.\n\n사이트 이름: Default Web Site\n디렉터리 검색: 사용",
+    accessPath: [
+      "서버 관리자",
+      "도구",
+      "IIS(인터넷 정보 서비스) 관리자",
+      "사이트 선택",
+      "디렉터리 검색",
+      "사용",
+    ],
+    correctAnswers: {
+      siteName: "Default Web Site",
+      directoryBrowsing: "사용",
+    },
+  },
+  {
+    id: 24,
+    type: "security",
+    title: "#25 계정 잠금 정책 설정",
+    description:
+      "로컬 보안 정책에서 계정 잠금 정책을 설정하시오.\n\n계정 잠금 임계값: 3회\n계정 잠금 기간: 30분\n다음 시간 후 계정 잠금 수를 원래대로 설정: 30분",
+    accessPath: [
+      "제어판",
+      "관리 도구",
+      "로컬 보안 정책",
+      "계정 정책",
+      "계정 잠금 정책",
+    ],
+    correctAnswers: {
+      lockoutThreshold: "3",
+      lockoutDuration: "30",
+      resetCounter: "30",
+    },
+  },
+  {
+    id: 25,
+    type: "security",
+    title: "#26 암호 정책 설정",
+    description:
+      "로컬 보안 정책에서 암호 정책을 설정하시오.\n\n최소 암호 길이: 8자\n암호는 복잡성을 만족해야 함: 사용\n최대 암호 사용 기간: 90일\n최소 암호 사용 기간: 1일",
+    accessPath: [
+      "제어판",
+      "관리 도구",
+      "로컬 보안 정책",
+      "계정 정책",
+      "암호 정책",
+    ],
+    correctAnswers: {
+      minPasswordLength: "8",
+      passwordComplexity: "사용",
+      maxPasswordAge: "90",
+      minPasswordAge: "1",
+    },
+  },
 ];

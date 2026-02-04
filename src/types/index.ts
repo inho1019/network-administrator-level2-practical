@@ -48,10 +48,14 @@ export interface FTPAnswers {
 }
 
 export interface DNSAnswers {
-  zoneName: string;
+  zoneName?: string;
   zoneType: string;
   hostName?: string;
   hostIP?: string;
+  // 역방향 조회 영역용
+  networkID?: string;
+  ptrIP?: string;
+  ptrHostName?: string;
 }
 
 export interface SecurityAnswers {
@@ -60,6 +64,12 @@ export interface SecurityAnswers {
   maxPasswordAge?: string;
   lockoutAttempts?: string;
   lockoutDuration?: string;
+  // 계정 잠금 정책용
+  lockoutThreshold?: string;
+  resetCounter?: string;
+  // 암호 정책용
+  minPasswordLength?: string;
+  passwordComplexity?: string;
 }
 
 export interface WebsiteAnswers {
@@ -84,6 +94,39 @@ export interface ServiceAnswers {
   serviceStatus?: string;
 }
 
+// 방화벽 규칙
+export interface FirewallAnswers {
+  ruleName: string;
+  port: string;
+  protocol: string;
+  action: string;
+}
+
+// 공유 폴더
+export interface ShareAnswers {
+  folderPath: string;
+  shareName: string;
+  sharePermission: string;
+  ntfsPermission: string;
+}
+
+// 디스크 관리
+export interface DiskAnswers {
+  volumeSize: string;
+  driveLetter: string;
+  fileSystem: string;
+  raidType?: string;
+}
+
+// IIS 설정
+export interface IISAnswers {
+  siteName: string;
+  defaultDoc1?: string;
+  defaultDoc2?: string;
+  defaultDoc3?: string;
+  directoryBrowsing?: string;
+}
+
 export type AllAnswerTypes =
   | NetworkAnswers
   | DHCPAnswers
@@ -92,7 +135,11 @@ export type AllAnswerTypes =
   | SecurityAnswers
   | WebsiteAnswers
   | UserAnswers
-  | ServiceAnswers;
+  | ServiceAnswers
+  | FirewallAnswers
+  | ShareAnswers
+  | DiskAnswers
+  | IISAnswers;
 
 export interface WindowsSettingsProblem {
   id: number;
@@ -104,7 +151,11 @@ export interface WindowsSettingsProblem {
     | "security"
     | "website"
     | "user"
-    | "service";
+    | "service"
+    | "firewall"
+    | "share"
+    | "disk"
+    | "iis";
   title: string;
   description: string;
   accessPath: string[];

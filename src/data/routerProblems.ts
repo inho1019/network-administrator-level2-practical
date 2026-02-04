@@ -441,4 +441,191 @@ export const routerProblems: RouterProblem[] = [
     commands: ["enable", "show version", "copy running-config startup-config"],
     explanation: "버전 확인: show version",
   },
+  {
+    id: 32,
+    category: "기본 라우터 설정",
+    question: "암호화된 enable 패스워드를 'cisco123'으로 설정하시오.",
+    commands: [
+      "enable",
+      "configure terminal",
+      "enable secret cisco123",
+      "exit",
+      "copy running-config startup-config",
+    ],
+    explanation: "암호화된 특권 패스워드: enable secret [패스워드]",
+  },
+  {
+    id: 33,
+    category: "기본 라우터 설정",
+    question: "라우터에 설정된 모든 평문 패스워드를 암호화하시오.",
+    commands: [
+      "enable",
+      "configure terminal",
+      "service password-encryption",
+      "exit",
+      "copy running-config startup-config",
+    ],
+    explanation: "평문 패스워드 암호화: service password-encryption",
+  },
+  {
+    id: 34,
+    category: "기본 라우터 설정",
+    question:
+      "라우터에 로그인할 때 표시할 배너 메시지를 'Authorized Access Only'로 설정하시오.",
+    commands: [
+      "enable",
+      "configure terminal",
+      "banner motd #Authorized Access Only#",
+      "exit",
+      "copy running-config startup-config",
+    ],
+    explanation: "배너 메시지: banner motd [구분자][메시지][구분자]",
+  },
+  {
+    id: 35,
+    category: "정적 라우팅",
+    question: "기본 경로(Default Route)를 설정하시오. 다음 홉 IP: 192.168.1.1",
+    commands: [
+      "enable",
+      "configure terminal",
+      "ip route 0.0.0.0 0.0.0.0 192.168.1.1",
+      "exit",
+      "copy running-config startup-config",
+    ],
+    explanation: "기본 경로: ip route 0.0.0.0 0.0.0.0 [다음 홉 IP]",
+  },
+  {
+    id: 36,
+    category: "NAT 설정",
+    question:
+      "FastEthernet 0/0을 NAT 내부 인터페이스로, Serial 2/0을 NAT 외부 인터페이스로 설정하시오.",
+    commands: [
+      "enable",
+      "configure terminal",
+      "interface fastethernet 0/0",
+      "ip nat inside",
+      "exit",
+      "interface serial 2/0",
+      "ip nat outside",
+      "exit",
+      "exit",
+      "copy running-config startup-config",
+    ],
+    explanation: "NAT 인터페이스: ip nat inside (내부), ip nat outside (외부)",
+  },
+  {
+    id: 37,
+    category: "NAT 설정",
+    question:
+      "ACL 1번에 192.168.10.0/24 네트워크를 허용하고, Serial 2/0 인터페이스를 통해 PAT(Port Address Translation)를 설정하시오.",
+    commands: [
+      "enable",
+      "configure terminal",
+      "access-list 1 permit 192.168.10.0 0.0.0.255",
+      "ip nat inside source list 1 interface serial 2/0 overload",
+      "exit",
+      "copy running-config startup-config",
+    ],
+    explanation:
+      "PAT 설정: ip nat inside source list [ACL] interface [인터페이스] overload",
+  },
+  {
+    id: 38,
+    category: "ACL 설정",
+    question:
+      "표준 ACL 10번을 생성하여 192.168.1.0/24 네트워크의 트래픽을 허용하시오.",
+    commands: [
+      "enable",
+      "configure terminal",
+      "access-list 10 permit 192.168.1.0 0.0.0.255",
+      "exit",
+      "copy running-config startup-config",
+    ],
+    explanation: "표준 ACL: access-list [1-99] permit/deny [IP] [와일드카드]",
+  },
+  {
+    id: 39,
+    category: "ACL 설정",
+    question:
+      "표준 ACL 20번을 생성하여 호스트 192.168.1.100의 트래픽을 거부하고, 나머지 모든 트래픽을 허용하시오.",
+    commands: [
+      "enable",
+      "configure terminal",
+      "access-list 20 deny host 192.168.1.100",
+      "access-list 20 permit any",
+      "exit",
+      "copy running-config startup-config",
+    ],
+    explanation:
+      "특정 호스트 거부: access-list [번호] deny host [IP], 나머지 허용: permit any",
+  },
+  {
+    id: 40,
+    category: "ACL 설정",
+    question:
+      "확장 ACL 100번을 생성하여 192.168.1.0/24에서 10.0.0.0/8로 가는 TCP 포트 80(HTTP) 트래픽을 허용하시오.",
+    commands: [
+      "enable",
+      "configure terminal",
+      "access-list 100 permit tcp 192.168.1.0 0.0.0.255 10.0.0.0 0.255.255.255 eq 80",
+      "exit",
+      "copy running-config startup-config",
+    ],
+    explanation:
+      "확장 ACL: access-list [100-199] permit/deny [프로토콜] [출발지] [목적지] eq [포트]",
+  },
+  {
+    id: 41,
+    category: "ACL 설정",
+    question:
+      "FastEthernet 0/0 인터페이스에 ACL 100번을 인바운드(in) 방향으로 적용하시오.",
+    commands: [
+      "enable",
+      "configure terminal",
+      "interface fastethernet 0/0",
+      "ip access-group 100 in",
+      "exit",
+      "exit",
+      "copy running-config startup-config",
+    ],
+    explanation: "ACL 적용: ip access-group [번호] [in|out]",
+  },
+  {
+    id: 42,
+    category: "확인 명령어",
+    question: "설정된 ACL(Access Control List)을 확인하시오.",
+    commands: [
+      "enable",
+      "show access-lists",
+      "copy running-config startup-config",
+    ],
+    explanation: "ACL 확인: show access-lists",
+  },
+  {
+    id: 43,
+    category: "확인 명령어",
+    question: "NAT 변환 테이블을 확인하시오.",
+    commands: [
+      "enable",
+      "show ip nat translations",
+      "copy running-config startup-config",
+    ],
+    explanation: "NAT 테이블 확인: show ip nat translations",
+  },
+  {
+    id: 44,
+    category: "RIP 설정",
+    question: "RIP 버전 2를 활성화하고, 192.168.10.0 네트워크를 광고하시오.",
+    commands: [
+      "enable",
+      "configure terminal",
+      "router rip",
+      "version 2",
+      "network 192.168.10.0",
+      "exit",
+      "exit",
+      "copy running-config startup-config",
+    ],
+    explanation: "RIP v2: router rip → version 2 → network [네트워크]",
+  },
 ];

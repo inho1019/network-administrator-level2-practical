@@ -1354,8 +1354,22 @@ const CableProblemInExam = ({
           제출
         </button>
       ) : (
-        <div className={`exam-result ${isCorrect ? "correct" : "incorrect"}`}>
-          <p>{isCorrect ? "✅ 정답입니다!" : "❌ 오답입니다"}</p>
+        <div className="exam-feedback-container">
+          <div
+            className={`feedback-box ${isCorrect ? "correct" : "incorrect"}`}
+          >
+            <div className="feedback-icon">{isCorrect ? "✅" : "❌"}</div>
+            <div className="feedback-content">
+              <p className="feedback-title">
+                {isCorrect ? "정답입니다!" : "오답입니다"}
+              </p>
+              {!isCorrect && (
+                <p className="feedback-description">
+                  케이블 배선 순서를 다시 확인해보세요.
+                </p>
+              )}
+            </div>
+          </div>
           <button onClick={onNext} className="next-exam-button">
             다음 문제
           </button>
@@ -1571,8 +1585,22 @@ const WindowsProblemInExam = ({
           제출
         </button>
       ) : (
-        <div className={`exam-result ${isCorrect ? "correct" : "incorrect"}`}>
-          <p>{isCorrect ? "✅ 정답입니다!" : "❌ 오답입니다"}</p>
+        <div className="exam-feedback-container">
+          <div
+            className={`feedback-box ${isCorrect ? "correct" : "incorrect"}`}
+          >
+            <div className="feedback-icon">{isCorrect ? "✅" : "❌"}</div>
+            <div className="feedback-content">
+              <p className="feedback-title">
+                {isCorrect ? "정답입니다!" : "오답입니다"}
+              </p>
+              {!isCorrect && (
+                <p className="feedback-description">
+                  접근 경로와 설정 값을 다시 확인해보세요.
+                </p>
+              )}
+            </div>
+          </div>
           <button onClick={onNext} className="next-exam-button">
             다음 문제
           </button>
@@ -1724,12 +1752,23 @@ const ShortAnswerProblemInExam = ({
           제출
         </button>
       ) : (
-        <div className={`exam-result ${isCorrect ? "correct" : "incorrect"}`}>
-          <p>
-            {isCorrect
-              ? "✅ 정답입니다!"
-              : `❌ 오답입니다. 정답: ${formatAnswer(problem.answer)}`}
-          </p>
+        <div className="exam-feedback-container">
+          <div
+            className={`feedback-box ${isCorrect ? "correct" : "incorrect"}`}
+          >
+            <div className="feedback-icon">{isCorrect ? "✅" : "❌"}</div>
+            <div className="feedback-content">
+              <p className="feedback-title">
+                {isCorrect ? "정답입니다!" : "오답입니다"}
+              </p>
+              {!isCorrect && (
+                <p className="feedback-answer">
+                  정답: {formatAnswer(problem.answer)}
+                </p>
+              )}
+              <p className="feedback-description">{problem.description}</p>
+            </div>
+          </div>
           <button onClick={onNext} className="next-exam-button">
             다음 문제
           </button>
@@ -1845,20 +1884,27 @@ const RouterProblemInExam = ({
           </button>
         </div>
       ) : (
-        <div className={`exam-result ${isCorrect ? "correct" : "incorrect"}`}>
-          <p>{isCorrect ? "✅ 정답입니다!" : "❌ 오답입니다"}</p>
-          {!isCorrect && (
-            <div className="correct-commands">
-              <p>
-                <strong>정답 명령어:</strong>
+        <div className="exam-feedback-container">
+          <div
+            className={`feedback-box ${isCorrect ? "correct" : "incorrect"}`}
+          >
+            <div className="feedback-icon">{isCorrect ? "✅" : "❌"}</div>
+            <div className="feedback-content">
+              <p className="feedback-title">
+                {isCorrect ? "정답입니다!" : "오답입니다"}
               </p>
-              {problem.commands.map((cmd: string, idx: number) => (
-                <div key={idx} className="correct-command">
-                  {cmd}
+              {!isCorrect && (
+                <div className="feedback-commands">
+                  <p className="feedback-answer">정답 명령어:</p>
+                  {problem.commands.map((cmd: string, idx: number) => (
+                    <div key={idx} className="feedback-command-item">
+                      {cmd}
+                    </div>
+                  ))}
                 </div>
-              ))}
+              )}
             </div>
-          )}
+          </div>
           <button onClick={onNext} className="next-exam-button">
             다음 문제
           </button>
@@ -2030,6 +2076,8 @@ function App() {
   const [currentAnswer, setCurrentAnswer] = useState<string | string[]>("");
   const [selectedOptions, setSelectedOptions] = useState<string[]>([]);
   const [score, setScore] = useState(0);
+  const [isAnswered, setIsAnswered] = useState(false);
+  const [isCorrect, setIsCorrect] = useState(false);
 
   // 현재 문제의 정답 개수 가져오기
   const getAnswerCount = (question: Question) => {
@@ -2054,6 +2102,8 @@ function App() {
       questions.length > 0 ? initCurrentAnswer(questions[0]) : "",
     );
     setScore(0);
+    setIsAnswered(false);
+    setIsCorrect(false);
     setPage("quiz");
   };
 
@@ -2071,23 +2121,16 @@ function App() {
         ? selectedOptions
         : selectedOptions[0];
 
-      const isCorrect = checkShortAnswer(answerToCheck, currentQuestion.answer);
+      const correct = checkShortAnswer(answerToCheck, currentQuestion.answer);
       const newUserAnswers = [...userAnswers, answerToCheck];
       setUserAnswers(newUserAnswers);
+      setIsAnswered(true);
+      setIsCorrect(correct);
 
-      if (isCorrect) {
+      if (correct) {
         const pointsPerQuestion =
           quizMode === "all" ? Math.round(100 / selectedQuestions.length) : 20;
         setScore(score + pointsPerQuestion);
-      }
-
-      if (currentQuestionIndex < selectedQuestions.length - 1) {
-        const nextQuestion = selectedQuestions[currentQuestionIndex + 1];
-        setCurrentQuestionIndex(currentQuestionIndex + 1);
-        setSelectedOptions([]);
-        setCurrentAnswer(initCurrentAnswer(nextQuestion));
-      } else {
-        setPage("result");
       }
       return;
     }
@@ -2109,28 +2152,34 @@ function App() {
       }
     }
 
-    const isCorrect = checkShortAnswer(currentAnswer, currentQuestion.answer);
+    const correct = checkShortAnswer(currentAnswer, currentQuestion.answer);
     const newUserAnswers = [...userAnswers, currentAnswer];
     setUserAnswers(newUserAnswers);
+    setIsAnswered(true);
+    setIsCorrect(correct);
 
-    if (isCorrect) {
+    if (correct) {
       const pointsPerQuestion =
         quizMode === "all" ? Math.round(100 / selectedQuestions.length) : 20;
       setScore(score + pointsPerQuestion);
     }
+  };
 
+  const handleNextQuestion = () => {
     if (currentQuestionIndex < selectedQuestions.length - 1) {
       const nextQuestion = selectedQuestions[currentQuestionIndex + 1];
       setCurrentQuestionIndex(currentQuestionIndex + 1);
       setSelectedOptions([]);
       setCurrentAnswer(initCurrentAnswer(nextQuestion));
+      setIsAnswered(false);
+      setIsCorrect(false);
     } else {
       setPage("result");
     }
   };
 
   const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === "Enter") {
+    if (e.key === "Enter" && !isAnswered) {
       handleSubmitAnswer();
     }
   };
@@ -2349,6 +2398,7 @@ function App() {
                         key={index}
                         className={`option-button ${isSelected ? "selected" : ""}`}
                         onClick={() => handleOptionClick(option, isMultiple)}
+                        disabled={isAnswered}
                       >
                         <span className="option-number">{index + 1}</span>
                         <span className="option-text">{option}</span>
@@ -2373,6 +2423,7 @@ function App() {
                         }
                         onKeyPress={handleKeyPress}
                         autoFocus={index === 0}
+                        disabled={isAnswered}
                       />
                     </div>
                   ))}
@@ -2387,13 +2438,49 @@ function App() {
                   onChange={(e) => setCurrentAnswer(e.target.value)}
                   onKeyPress={handleKeyPress}
                   autoFocus
+                  disabled={isAnswered}
                 />
               )}
-              <button className="submit-button" onClick={handleSubmitAnswer}>
-                {currentQuestionIndex < selectedQuestions.length - 1
-                  ? "다음 문제"
-                  : "결과 보기"}
-              </button>
+
+              {/* 정답/오답 피드백 */}
+              {isAnswered && (
+                <div
+                  className={`feedback-box ${isCorrect ? "correct" : "incorrect"}`}
+                >
+                  <div className="feedback-icon">{isCorrect ? "✅" : "❌"}</div>
+                  <div className="feedback-content">
+                    <p className="feedback-title">
+                      {isCorrect ? "정답입니다!" : "오답입니다"}
+                    </p>
+                    {!isCorrect && (
+                      <p className="feedback-answer">
+                        정답:{" "}
+                        {Array.isArray(currentQuestion.answer)
+                          ? currentQuestion.answer.join(", ")
+                          : currentQuestion.answer}
+                      </p>
+                    )}
+                    <p className="feedback-description">
+                      {currentQuestion.description}
+                    </p>
+                  </div>
+                </div>
+              )}
+
+              {!isAnswered ? (
+                <button className="submit-button" onClick={handleSubmitAnswer}>
+                  제출하기
+                </button>
+              ) : (
+                <button
+                  className="submit-button next"
+                  onClick={handleNextQuestion}
+                >
+                  {currentQuestionIndex < selectedQuestions.length - 1
+                    ? "다음 문제"
+                    : "결과 보기"}
+                </button>
+              )}
             </div>
           </div>
         </div>

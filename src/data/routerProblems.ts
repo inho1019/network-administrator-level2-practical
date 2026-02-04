@@ -178,39 +178,6 @@ export const routerProblems: RouterProblem[] = [
   {
     id: 12,
     category: "시리얼 인터페이스",
-    question:
-      "ROUTER1의 Serial 2/0을 사용가능하게 IP 주소를 192.168.0.101/24와 두번째 IP 192.168.0.102/24로 설정하고 활성화 하시오.",
-    commands: [
-      "enable",
-      "configure terminal",
-      "interface serial 2/0",
-      "ip address 192.168.0.101 255.255.255.0",
-      "ip address 192.168.0.102 255.255.255.0 secondary",
-      "no shutdown",
-      "exit",
-      "exit",
-      "copy running-config startup-config",
-    ],
-    explanation: "시리얼 인터페이스도 보조 IP 설정 가능",
-  },
-  {
-    id: 13,
-    category: "시리얼 인터페이스",
-    question: "ROUTER1 Serial 2/0을 활성화 시키시오.",
-    commands: [
-      "enable",
-      "configure terminal",
-      "interface serial 2/0",
-      "no shutdown",
-      "exit",
-      "exit",
-      "copy running-config startup-config",
-    ],
-    explanation: "인터페이스 활성화: no shutdown",
-  },
-  {
-    id: 14,
-    category: "시리얼 인터페이스",
     question: "serial 2/0에 frame relay 방식으로 캡슐화 하시오.",
     commands: [
       "enable",
@@ -224,7 +191,7 @@ export const routerProblems: RouterProblem[] = [
     explanation: "프레임 릴레이: encapsulation frame-relay",
   },
   {
-    id: 15,
+    id: 13,
     category: "게이트웨이 설정",
     question: "기본 게이트웨이를 설정하시오. IP: 192.168.0.10",
     commands: [
@@ -237,7 +204,7 @@ export const routerProblems: RouterProblem[] = [
     explanation: "기본 게이트웨이: ip default-gateway [IP]",
   },
   {
-    id: 16,
+    id: 14,
     category: "DHCP 설정",
     question:
       "ROUTER1의 DHCP 네트워크를 192.168.100.0/24 서버이름은 'icqa'로 설정하시오.",
@@ -253,7 +220,7 @@ export const routerProblems: RouterProblem[] = [
     explanation: "DHCP 풀: ip dhcp pool [이름] → network [네트워크] [마스크]",
   },
   {
-    id: 17,
+    id: 15,
     category: "정적 라우팅",
     question:
       "Router에 목적지 네트워크(24.48.200.0/24) 및 게이트웨이 IP(100.150.100.2)로 정적 라우팅을 설정하시오.",
@@ -267,7 +234,7 @@ export const routerProblems: RouterProblem[] = [
     explanation: "정적 라우팅: ip route [목적지] [마스크] [게이트웨이]",
   },
   {
-    id: 18,
+    id: 16,
     category: "네트워크 설정",
     question: "Default Network를 192.168.0.10으로 설정 하시오.",
     commands: [
@@ -280,7 +247,7 @@ export const routerProblems: RouterProblem[] = [
     explanation: "기본 네트워크: ip default-network [IP]",
   },
   {
-    id: 19,
+    id: 17,
     category: "네트워크 설정",
     question:
       "RIP 환경이 구성되어 있을 때 라우팅 테이블에 등록되지 않는 목적지로 향하는 패킷은 192.168.1.1 네트워크로 보내도록 ROUTER1에 디폴트 네트워크를 설정하시오. (단, ip route 0.0.0.0 명령어를 사용해서는 안됨)",
@@ -294,7 +261,7 @@ export const routerProblems: RouterProblem[] = [
     explanation: "RIP에서 디폴트 네트워크 설정",
   },
   {
-    id: 20,
+    id: 18,
     category: "OSPF 설정",
     question:
       "네트워크가 구성되어 있을 때 OSPF를 설정하시오 (Process ID와 Area ID는 1)",
@@ -311,7 +278,7 @@ export const routerProblems: RouterProblem[] = [
       "OSPF: router ospf [ID] → network [네트워크] [와일드카드] area [영역]",
   },
   {
-    id: 21,
+    id: 19,
     category: "OSPF 설정",
     question:
       "ROUTER1에 OSPF를 설정하시오. (Process ID와 Area id는 1, 연결된 네트워크는 192.70.100.0/24와 193.150.60.0/24)",
@@ -328,7 +295,7 @@ export const routerProblems: RouterProblem[] = [
     explanation: "여러 네트워크를 OSPF에 추가",
   },
   {
-    id: 22,
+    id: 20,
     category: "SNMP 설정",
     question:
       "Router1에 SNMP 설정을 다음과 같이 구성하시오. SNMP 통신 시 Community 이름을 'ICQA'로 설정하시오.",
@@ -342,7 +309,7 @@ export const routerProblems: RouterProblem[] = [
     explanation: "SNMP 커뮤니티: snmp-server community [이름] [ro|rw]",
   },
   {
-    id: 23,
+    id: 21,
     category: "텔넷 설정",
     question:
       "ROUTER1 Telnet에 접근하는 Password를 icqa로 설정하고 로그인 하시오.",
@@ -359,7 +326,7 @@ export const routerProblems: RouterProblem[] = [
     explanation: "텔넷 패스워드: line vty 0 4 → password [암호] → login",
   },
   {
-    id: 24,
+    id: 22,
     category: "텔넷 설정",
     question:
       "Telnet에 연결 후 3분 50초 동안 입력이 없으면 세션이 자동 종료되도록 설정하시오.",
@@ -375,7 +342,7 @@ export const routerProblems: RouterProblem[] = [
     explanation: "세션 타임아웃: exec-timeout [분] [초]",
   },
   {
-    id: 25,
+    id: 23,
     category: "텔넷 설정",
     question:
       "라우터에서 Telnet 접속을 SSH로 변경하여 VTY 0 4 포트에서 SSH로 접속 가능하도록 설정하시오.",
@@ -391,7 +358,7 @@ export const routerProblems: RouterProblem[] = [
     explanation: "SSH 전환: transport input ssh",
   },
   {
-    id: 26,
+    id: 24,
     category: "확인 명령어",
     question: "인터페이스 정보를 확인하고 저장하시오.",
     commands: [
@@ -402,28 +369,28 @@ export const routerProblems: RouterProblem[] = [
     explanation: "인터페이스 확인: show ip interface brief",
   },
   {
-    id: 27,
+    id: 25,
     category: "확인 명령어",
     question: "접속한 사용자 정보를 확인하고 저장하시오.",
     commands: ["enable", "show users", "copy running-config startup-config"],
     explanation: "사용자 확인: show users",
   },
   {
-    id: 28,
+    id: 26,
     category: "확인 명령어",
     question: "라우팅 테이블 정보를 확인하고 저장하시오.",
     commands: ["enable", "show ip route", "copy running-config startup-config"],
     explanation: "라우팅 테이블: show ip route",
   },
   {
-    id: 29,
+    id: 27,
     category: "확인 명령어",
     question: "플래쉬 내용을 확인하고 저장하시오.",
     commands: ["enable", "show flash", "copy running-config startup-config"],
     explanation: "플래시 확인: show flash",
   },
   {
-    id: 30,
+    id: 28,
     category: "확인 명령어",
     question: "프로세스 정보를 확인하고 저장하시오.",
     commands: [
@@ -434,14 +401,14 @@ export const routerProblems: RouterProblem[] = [
     explanation: "프로세스 확인: show processes",
   },
   {
-    id: 31,
+    id: 29,
     category: "확인 명령어",
     question: "소프트웨어 버전과 IOS 버전 등을 확인하십시오.",
     commands: ["enable", "show version", "copy running-config startup-config"],
     explanation: "버전 확인: show version",
   },
   {
-    id: 32,
+    id: 30,
     category: "기본 라우터 설정",
     question: "암호화된 enable 패스워드를 'cisco123'으로 설정하시오.",
     commands: [
@@ -454,7 +421,7 @@ export const routerProblems: RouterProblem[] = [
     explanation: "암호화된 특권 패스워드: enable secret [패스워드]",
   },
   {
-    id: 33,
+    id: 31,
     category: "기본 라우터 설정",
     question: "라우터에 설정된 모든 평문 패스워드를 암호화하시오.",
     commands: [
@@ -467,7 +434,7 @@ export const routerProblems: RouterProblem[] = [
     explanation: "평문 패스워드 암호화: service password-encryption",
   },
   {
-    id: 34,
+    id: 32,
     category: "기본 라우터 설정",
     question:
       "라우터에 로그인할 때 표시할 배너 메시지를 'Authorized Access Only'로 설정하시오.",
@@ -481,7 +448,7 @@ export const routerProblems: RouterProblem[] = [
     explanation: "배너 메시지: banner motd [구분자][메시지][구분자]",
   },
   {
-    id: 35,
+    id: 33,
     category: "정적 라우팅",
     question: "기본 경로(Default Route)를 설정하시오. 다음 홉 IP: 192.168.1.1",
     commands: [
@@ -494,7 +461,7 @@ export const routerProblems: RouterProblem[] = [
     explanation: "기본 경로: ip route 0.0.0.0 0.0.0.0 [다음 홉 IP]",
   },
   {
-    id: 36,
+    id: 34,
     category: "NAT 설정",
     question:
       "FastEthernet 0/0을 NAT 내부 인터페이스로, Serial 2/0을 NAT 외부 인터페이스로 설정하시오.",
@@ -513,7 +480,7 @@ export const routerProblems: RouterProblem[] = [
     explanation: "NAT 인터페이스: ip nat inside (내부), ip nat outside (외부)",
   },
   {
-    id: 37,
+    id: 35,
     category: "NAT 설정",
     question:
       "ACL 1번에 192.168.10.0/24 네트워크를 허용하고, Serial 2/0 인터페이스를 통해 PAT(Port Address Translation)를 설정하시오.",
@@ -529,7 +496,7 @@ export const routerProblems: RouterProblem[] = [
       "PAT 설정: ip nat inside source list [ACL] interface [인터페이스] overload",
   },
   {
-    id: 38,
+    id: 36,
     category: "ACL 설정",
     question:
       "표준 ACL 10번을 생성하여 192.168.1.0/24 네트워크의 트래픽을 허용하시오.",
@@ -543,7 +510,7 @@ export const routerProblems: RouterProblem[] = [
     explanation: "표준 ACL: access-list [1-99] permit/deny [IP] [와일드카드]",
   },
   {
-    id: 39,
+    id: 37,
     category: "ACL 설정",
     question:
       "표준 ACL 20번을 생성하여 호스트 192.168.1.100의 트래픽을 거부하고, 나머지 모든 트래픽을 허용하시오.",
@@ -559,7 +526,7 @@ export const routerProblems: RouterProblem[] = [
       "특정 호스트 거부: access-list [번호] deny host [IP], 나머지 허용: permit any",
   },
   {
-    id: 40,
+    id: 38,
     category: "ACL 설정",
     question:
       "확장 ACL 100번을 생성하여 192.168.1.0/24에서 10.0.0.0/8로 가는 TCP 포트 80(HTTP) 트래픽을 허용하시오.",
@@ -574,7 +541,7 @@ export const routerProblems: RouterProblem[] = [
       "확장 ACL: access-list [100-199] permit/deny [프로토콜] [출발지] [목적지] eq [포트]",
   },
   {
-    id: 41,
+    id: 39,
     category: "ACL 설정",
     question:
       "FastEthernet 0/0 인터페이스에 ACL 100번을 인바운드(in) 방향으로 적용하시오.",
@@ -590,7 +557,7 @@ export const routerProblems: RouterProblem[] = [
     explanation: "ACL 적용: ip access-group [번호] [in|out]",
   },
   {
-    id: 42,
+    id: 40,
     category: "확인 명령어",
     question: "설정된 ACL(Access Control List)을 확인하시오.",
     commands: [
@@ -601,7 +568,7 @@ export const routerProblems: RouterProblem[] = [
     explanation: "ACL 확인: show access-lists",
   },
   {
-    id: 43,
+    id: 41,
     category: "확인 명령어",
     question: "NAT 변환 테이블을 확인하시오.",
     commands: [
@@ -612,7 +579,7 @@ export const routerProblems: RouterProblem[] = [
     explanation: "NAT 테이블 확인: show ip nat translations",
   },
   {
-    id: 44,
+    id: 42,
     category: "RIP 설정",
     question: "RIP 버전 2를 활성화하고, 192.168.10.0 네트워크를 광고하시오.",
     commands: [
